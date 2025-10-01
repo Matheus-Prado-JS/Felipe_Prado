@@ -1,0 +1,162 @@
+/* IMPORTAÇÃO DA FONTE */
+@font-face {
+  font-family: 'Snug Sharp VF';
+  src: url('fonts/SnugSharpVF.woff2') format('woff2'),
+       url('fonts/SnugSharpVF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Snug Sharp VF';
+}
+html, body {
+  height: auto; /* garante que o body expanda com o conteúdo */
+  min-height: 100%;
+  overflow-x: hidden; /* evita scroll horizontal inesperado */
+}
+body {
+  background-color: #222; /* cinza escuro */
+  color: white;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  display: block;
+}
+
+/* HEADER */
+header {
+  background-color: #11111100;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centraliza logo */
+  width: 100%;
+  border-bottom: 2px solid #fbb13b21;
+}
+
+header .logo img {
+  height: 100px; /* logo maior */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* LOGO HOVER */
+header .logo img:hover {
+  transform: scale(1.2) rotate(-5deg);
+  box-shadow: 0 10px 20px rgba(251, 177, 59, 0); /* sombra #fbb03b */
+}
+
+/* SEÇÕES */
+section {
+  width: 90%;
+  max-width: 1200px;
+  text-align: center;
+  margin: 30px auto; /* centraliza e separa verticalmente */
+}
+
+/* TÍTULOS */
+section h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #fbb03b;
+}
+
+/* CARROSSEL */
+.carousel {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  justify-content: center;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background: #fbb03b;
+  border-radius: 4px;
+}
+
+/* CARDS */
+.card {
+  min-width: 200px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  scroll-snap-align: start;
+  overflow: hidden;
+  background-color: #333;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* CARD HOVER */
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(251,176,59,0.5); /* sombra #fbb03b */
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card img:hover {
+  transform: scale(1.05);
+}
+
+/* GRID 2x2 HORIZONTAL */
+.grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, auto)); /* 2 por linha, largura mínima 200px */
+  gap: 15px 25px; /* vertical 15px, horizontal 25px */
+  justify-content: center; /* centraliza as colunas */
+  padding: 20px 0;
+}
+/* Modelo de Vídeos */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1200px;
+  aspect-ratio: 16 / 9; /* padrão horizontal */
+}
+
+.modal-content.vertical {
+  aspect-ratio: 9 / 16; /* Shorts vertical */
+}
+
+.modal iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.modal .close {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 30px;
+  color: #fbb03b;
+  cursor: pointer;
+}
