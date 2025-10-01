@@ -1,59 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfólio - FP</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Felipe Prado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <img src="img/logo-FP.png" alt="Logo FP">
-    </div>
-  </header>
+<header class="site-header">
+<div class="container header-inner">
+<img src="img/logo-FP.png" alt="Logo" class="logo">
+<nav class="top-nav">
+<a href="#">HOME</a>
+<a href="#contact">CONTATO</a>
+</nav>
+</div>
+</header>
 
-  <!-- SEÇÃO 1 -->
-  <section>
-    <h2>Meus Trabalhos</h2>
-    <div class="carousel" id="carousel-trabalhos">
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-img.jpg" alt="Trabalho 1"></div>
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-img.jpg" alt="Trabalho 2"></div>
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-img.jpg" alt="Trabalho 3"></div>
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-img.jpg" alt="Trabalho 4"></div>
-    </div>
-  </section>
 
-  <!-- SEÇÃO 2 -->
-  <section>
-    <h2>Títulos</h2>
-    <div class="carousel" id="carousel-titulos">
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-red-img.jpg" alt="Título 1"></div>
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-red-img.jpg" alt="Título 2"></div>
-      <div class="card" data-video="jVfv1bJLdxg"><img src="img/vertical-red-img.jpg" alt="Título 3"></div>
-    </div>
-  </section>
+<!-- HERO -->
+<section class="hero">
+<div class="hero-overlay"></div>
+<div class="container hero-content">
+<h1 class="wordmark">Felipe Prado <span class="dot" aria-hidden="true"></span></h1>
+<p class="hero-desc">Cinegrafista, Editor e Designer Gráfico.</p>
+</div>
+</section>
+<!-- Hero termina aqui -->
+<section class="trabalhos">
+  <div class="container">
+    <h2 class="section-title">Trabalhos</h2>
 
-  <!-- SEÇÃO 3 -->
-  <section>
-    <h2>Títulos (2)</h2>
-    <div class="grid-2x2">
-      <div class="card" data-video="AzP6YmaQNdI"><img src="img/purple-horizontal.jpg" alt="Título A"></div>
-      <div class="card" data-video="AzP6YmaQNdI"><img src="img/purple-horizontal.jpg" alt="Título B"></div>
-      <div class="card" data-video="AzP6YmaQNdI"><img src="img/purple-horizontal.jpg" alt="Título C"></div>
-      <div class="card" data-video="AzP6YmaQNdI"><img src="img/purple-horizontal.jpg" alt="Título D"></div>
-    </div>
-  </section>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="work-card">
+          <div class="thumb">
+            <!-- Substitua o src pelo link da imagem que você escolher -->
+            <img src="https://images.pexels.com/photos/32939753/pexels-photo-32939753.jpeg" alt="FC Porto">
+          </div>
+          <h3>Título</h3>
+          <p>Coloque seu texto aqui.</p>
+        </div>
 
-  <!-- Modal de vídeo -->
-  <div id="videoModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <iframe id="videoFrame" width="800" height="450" src="" frameborder="0" allowfullscreen></iframe>
+        <div class="work-card">
+          <div class="thumb">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Chevrolet">
+          </div>
+          <h3>Título</h3>
+          <p>Coloque seu texto aqui.</p>
+        </div>
+
+        <div class="work-card">
+          <div class="thumb">
+            <!-- Substitua o src pelo link do projeto RAM que preferir -->
+            <img src="https://images.pexels.com/photos/28654178/pexels-photo-28654178.jpeg" alt="RAM">
+          </div>
+          <h3>Título</h3>
+          <p>Coloque seu texto aqui.</p>
+        </div>
+
+        <div class="work-card">
+          <div class="thumb">
+            <img src="https://images.pexels.com/photos/3379934/pexels-photo-3379934.jpeg" alt="3Z">
+          </div>
+          <h3>Título</h3>
+          <p>Coloque seu texto aqui.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-controls">
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
     </div>
   </div>
+</section>
+<!-- ==========================
+     Serviços
+========================== -->
+<section class="servicos">
+  <div class="container">
+    <span class="subtitle">SERVIÇOS</span>
+    <h2 class="section-title">Títulos:</h2>
 
-  <script src="script.js"></script>
+    <div class="servicos-grid">
+      <div class="servico-card">
+        <h3>Texto</h3>
+        <p>
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+        </p>
+      </div>
+
+      <div class="servico-card">
+        <h3>Texto</h3>
+        <p>
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+        </p>
+        <a href="#" class="btn">Visite o site</a>
+      </div>
+
+      <div class="servico-card">
+        <h3>Texto</h3>
+        <p>
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+        </p>
+      </div>
+
+      <div class="servico-card">
+        <h3>Texto</h3>
+        <p>
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+          Exemplo de texto. Exemplo de texto. Exemplo de texto. Exemplo de texto.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script src="script.js"></script>
 </body>
 </html>

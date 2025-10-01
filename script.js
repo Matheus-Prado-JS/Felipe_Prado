@@ -1,49 +1,47 @@
-// CARROSSEL SUAVE
-document.querySelectorAll(".carousel").forEach(carousel => {
-  carousel.addEventListener("wheel", (evt) => {
-    evt.preventDefault();
-    carousel.scrollBy({
-      left: evt.deltaY < 0 ? -100 : 100,
-      behavior: "smooth"
-    });
-  });
+// Pequeno script caso queira ligar funcionalidades no futuro
+document.addEventListener('DOMContentLoaded', ()=>{
+// Exemplo: trocar background facilmente via data attribute (pode ser usado posteriormente)
+// document.querySelector('.hero').dataset.bg = 'url(...)'
+console.log('Hero carregado');
+});
+// Carrossel Trabalhos
+const track = document.querySelector(".carousel-track");
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+
+let index = 0;
+const cardWidth = 304; // largura + gap
+const totalCards = document.querySelectorAll(".work-card").length;
+
+nextBtn.addEventListener("click", () => {
+  if (index < totalCards - 1) {
+    index++;
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
 });
 
-// MODAL DE VÍDEO
-const modal = document.getElementById("videoModal");
-const iframe = document.getElementById("videoFrame");
-const modalContent = modal.querySelector(".modal-content");
-const closeBtn = document.querySelector(".close");
-
-// ABRIR VÍDEO AO CLICAR NO CARD
-document.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("click", () => {
-    const videoId = card.getAttribute("data-video");
-    const orientation = card.getAttribute("data-orientation") || "horizontal";
-
-    if(videoId) {
-      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      
-      // Ajusta a classe do modal para orientação
-      if(orientation === "vertical") {
-        modalContent.classList.add("vertical");
-      } else {
-        modalContent.classList.remove("vertical");
-      }
-
-      modal.style.display = "flex";
-    }
-  });
+prevBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+  }
 });
+// Detecta quando a seção "Serviços" entra na tela
+const servicosSection = document.querySelector(".servicos");
 
-// FECHAR MODAL
-const closeModal = () => {
-  iframe.src = "";
-  modal.style.display = "none";
-  modalContent.classList.remove("vertical");
-};
+if (servicosSection) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          document.body.classList.add("light-theme");
+        } else {
+          document.body.classList.remove("light-theme");
+        }
+      });
+    },
+    { threshold: 0.4 } // 40% da seção visível já ativa a troca
+  );
 
-closeBtn.addEventListener("click", closeModal);
-window.addEventListener("click", (e) => {
-  if(e.target === modal) closeModal();
-});
+  observer.observe(servicosSection);
+}
