@@ -187,9 +187,10 @@ body {
    ============================== */
 
 .trabalhos {
-  padding: 100px 0;
-  background: #000;
-  color: #fff;
+  padding: 60px 0;
+  background: inherit;
+  color: inherit;
+  transition: background 0.6s ease, color 0.6s ease;
 }
 
 .section-title {
@@ -216,12 +217,15 @@ body {
 .work-card {
   min-width: 320px;   /* largura do card (ajuste se quiser mais estreito/largo) */
   max-width: 320px;
-  background: #111;
+  background: rgba(255,255,255,0.03);
   border-radius: 10px;
   overflow: hidden;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  transition: background 0.6s ease, color 0.6s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* thumb wrapper: força proporção fixa (16:9) */
@@ -245,13 +249,16 @@ body {
 .work-card h3 {
   margin: 16px;
   font-size: 20px;
+  color: inherit;
+  transition: color 0.6s ease;
 }
 
 .work-card p {
   margin: 0 16px 20px;
   font-size: 14px;
-  color: #aaa;
   flex: 1 0 auto;
+  color: inherit;
+  transition: color 0.6s ease;
 }
 
 .carousel-controls {
@@ -272,7 +279,7 @@ body {
 }
 
 .carousel-controls button:hover {
-  background: #fbb03b;
+  background: #da7415;
 }
 
 /* responsividade (ajusta largura dos cards) */
@@ -284,6 +291,35 @@ body {
   .carousel-track { gap: 14px; }
   .work-card { min-width: 230px; max-width: 230px; }
 }
+
+/* ==============================
+   Trabalhos Verticais
+============================== */
+.trabalhos-verticais .work-card .thumb {
+  aspect-ratio: 9 / 16; /* agora é retrato */
+  background: inherit;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+.trabalhos-verticais .work-card {
+  min-width: 240px;  /* ajusta largura do card */
+  max-width: 240px;
+}
+
+@media (max-width: 1000px) {
+  .trabalhos-verticais .work-card {
+    min-width: 200px;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 600px) {
+  .trabalhos-verticais .work-card {
+    min-width: 160px;
+    max-width: 160px;
+  }
+}
+
 /* ==============================
    Serviços
 ============================== */
@@ -371,8 +407,140 @@ body {
     font-size: 32px;
   }
 }
+/* Section Quem Sou Eu */
+.quem-sou-eu {
+  background: #000;
+  color: #fff;
+  padding: 100px 20px;
+}
+
+.quem-sou-eu-conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px; /* espaço suave entre img e texto */
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.quem-sou-eu-img {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.quem-sou-eu-img img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.quem-sou-eu-texto {
+  flex: 1;
+  max-width: 550px; /* limita pra não ficar esticado demais */
+}
+
+.quem-sou-eu h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #fb913b;
+}
+
+.quem-sou-eu p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.btn-quem-sou-eu {
+  display: inline-block;
+  padding: 12px 30px;
+  background: #fb913b;
+  color: #000;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-quem-sou-eu:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Animação scroll */
+.quem-sou-eu {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.quem-sou-eu.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+
+/* ==========================
+   Contato
+========================== */
+.contato {
+  background: #000;
+  padding: 80px;
+}
+
+.contato-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 2000px;
+  margin: 0 auto;
+  background: #000;
+  padding: 40px 60px;
+  border-radius: 12px;
+  transition: background 0.4s ease;
+}
+
+.contato-container:hover {
+  background: #c54e09; /* cinza escuro */
+}
+
+.titulo-contato {
+  font-size: 4rem; /* maior */
+  font-weight: 900;
+  color: #fb913b; /* laranja */
+  margin: 0;
+  transition: color 0.4s ease;
+}
+
+.contato-container:hover .titulo-contato {
+  color: #fff; /* muda para branco */
+}
+
+.btn-contato {
+  padding: 10px 20px;
+  border: 2px solid #fb913b;
+  color: #fb913b;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contato-container:hover .btn-contato {
+  border-color: #fff;
+  color: #fff;
+  background: transparent;
+}
 
 
+.contato-info {
+  margin-top: 40px;
+  font-size: 1rem;
+  color: #ccc;
+}
 
 
 
@@ -384,7 +552,7 @@ body {
    Tema Claro para Serviços
 ============================== */
 body.light-theme {
-  background: #fff;
+  background: #ffffff;
   color: #000;
   transition: background 0.6s ease, color 0.6s ease;
 }
@@ -392,7 +560,12 @@ body.light-theme {
 body.light-theme .site-header {
   background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
 }
-
+/* quando o site ficar claro, inverse o fundo do card */
+body.light-theme .work-card {
+  background: rgba(0,0,0,0.09); /* sutil em modo claro */
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
 body.light-theme .site-header .top-nav a {
   color: #111;
 }

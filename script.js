@@ -1,47 +1,134 @@
-// Pequeno script caso queira ligar funcionalidades no futuro
-document.addEventListener('DOMContentLoaded', ()=>{
-// Exemplo: trocar background facilmente via data attribute (pode ser usado posteriormente)
-// document.querySelector('.hero').dataset.bg = 'url(...)'
-console.log('Hero carregado');
-});
-// Carrossel Trabalhos
-const track = document.querySelector(".carousel-track");
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-
-let index = 0;
-const cardWidth = 304; // largura + gap
-const totalCards = document.querySelectorAll(".work-card").length;
-
-nextBtn.addEventListener("click", () => {
-  if (index < totalCards - 1) {
-    index++;
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
+// script.js (substituir inteiramente pelo conteúdo abaixo)
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM carregado — iniciando scripts');
+  initCarousels();
+  initThemeToggleBetweenSections();
 });
 
-prevBtn.addEventListener("click", () => {
-  if (index > 0) {
-    index--;
-    track.style.transform = `translateX(-${index * cardWidth}px)`;
-  }
-});
-// Detecta quando a seção "Serviços" entra na tela
-const servicosSection = document.querySelector(".servicos");
+/* ===========================
+   Carousels (suporta múltiplos carousels na página)
+   =========================== */
+function initCarousels() {
+  const carousels = document.querySelectorAll('.carousel');
 
-if (servicosSection) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          document.body.classList.add("light-theme");
-        } else {
-          document.body.classList.remove("light-theme");
-        }
+  carousels.forEach(carousel => {
+    const track = carousel.querySelector('.carousel-track');
+    if (!track) return;
+
+    const container = carousel.closest('.container') || carousel.parentElement;
+    const controls = container.querySelector('.carousel-controls');
+    const prevBtn = controls ? controls.querySelector('.prev') : null;
+    const nextBtn = controls ? controls.querySelector('.next') : null;
+
+    const cards = Array.from(track.querySelectorAll('.work-card'));
+    if (cards.length === 0) return;
+
+    // calcula gap entre cards (fallback 24)
+    const trackStyle = window.getComputedStyle(track);
+    const gap = parseFloat(trackStyle.gap || trackStyle.columnGap || '24') || 24;
+
+    let cardWidth = cards[0].getBoundingClientRect().width;
+    let index = 0;
+
+    function recalc() {
+      cardWidth = cards[0].getBoundingClientRect().width;
+      update(); // atualiza posição ao redimensionar
+    }
+
+    function getMaxTranslate() {
+      const visibleWidth = carousel.clientWidth;
+      const totalWidth = cards.length * cardWidth + gap * (cards.length - 1);
+      return Math.max(0, totalWidth - visibleWidth);
+    }
+
+    function update() {
+      const maxTranslate = getMaxTranslate();
+      let translate = index * (cardWidth + gap);
+      if (translate > maxTranslate) translate = maxTranslate;
+      if (translate < 0) translate = 0;
+      track.style.transform = `translateX(-${translate}px)`;
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        index++;
+        // limite superior calculado por update()
+        update();
       });
-    },
-    { threshold: 0.4 } // 40% da seção visível já ativa a troca
-  );
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        index = Math.max(0, index - 1);
+        update();
+      });
+    }
 
-  observer.observe(servicosSection);
+    // Atualiza dimensões ao redimensionar a janela
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(recalc, 120);
+    });
+
+    // inicializa
+    recalc();
+  });
 }
+
+/* ===========================
+   Tema claro: inicia em .trabalhos-verticais e termina depois de .servicos
+   lógica: verifica posição do CENTRO da viewport (mais estável que thresholds)
+   =========================== */
+function initThemeToggleBetweenSections() {
+  const startEl = document.querySelector('.trabalhos-verticais');
+  const endEl = document.querySelector('.servicos');
+
+  // se faltar qualquer uma das seções, não faz nada
+  if (!startEl || !endEl) return;
+
+  function isCenterBetween(startTop, endBottom) {
+    const centerY = window.scrollY + window.innerHeight / 2;
+    return centerY >= startTop && centerY <= endBottom;
+  }
+
+  function checkAndToggleTheme() {
+    const startTop = startEl.offsetTop;
+    const endBottom = endEl.offsetTop + endEl.offsetHeight;
+
+    if (isCenterBetween(startTop, endBottom)) {
+      document.body.classList.add('light-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+    }
+  }
+
+  // rAF-based scroll handler (performante)
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        checkAndToggleTheme();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+
+  // também checa ao redimensionar e no load
+  window.addEventListener('resize', () => {
+    checkAndToggleTheme();
+  });
+
+  // checagem inicial
+  checkAndToggleTheme();
+}
+const sections = document.querySelectorAll('.quem-sou-eu');
+
+window.addEventListener('scroll', () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if (top < window.innerHeight - 100) {
+      sec.classList.add('show');
+    }
+  });
+});
