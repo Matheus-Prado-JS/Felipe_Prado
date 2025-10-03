@@ -136,17 +136,33 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll(".work-card").forEach(card => {
   card.style.cursor = "pointer";
   card.addEventListener("click", () => {
-    const videoUrl = card.getAttribute("data-video");
+    let videoUrl = card.getAttribute("data-video");
     const modal = document.getElementById("videoModal");
     const frame = document.getElementById("videoFrame");
     const wrapper = document.querySelector(".video-wrapper");
 
     if (videoUrl) {
-      // Adiciona autoplay no vídeo
-      frame.src = videoUrl + "?autoplay=1";
+      let embedUrl = "";
 
-      // Detecta se é vertical (9:16) pelo link (shorts) ou parâmetro custom
-      if (videoUrl.includes("shorts") || card.classList.contains("vertical")) {
+      // Se já for embed, usa direto
+      if (videoUrl.includes("embed/")) {
+        embedUrl = videoUrl + "?autoplay=1";
+      } 
+      // Se for Shorts no formato normal
+      else if (videoUrl.includes("shorts/")) {
+        let videoId = videoUrl.split("shorts/")[1].split("?")[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      } 
+      // Se for vídeo normal no formato watch
+      else if (videoUrl.includes("watch?v=")) {
+        let videoId = videoUrl.split("watch?v=")[1].split("&")[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      }
+
+      frame.src = embedUrl;
+
+      // Detecta se é vertical (Shorts) ou horizontal
+      if (videoUrl.includes("shorts") || videoUrl.includes("embed/") && wrapper) {
         wrapper.classList.add("vertical");
       } else {
         wrapper.classList.remove("vertical");
@@ -162,7 +178,7 @@ document.querySelector(".close-btn").addEventListener("click", () => {
   const modal = document.getElementById("videoModal");
   const frame = document.getElementById("videoFrame");
   modal.style.display = "none";
-  frame.src = ""; // para o vídeo
+  frame.src = "";
 });
 
 // Fecha clicando fora
