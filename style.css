@@ -55,20 +55,46 @@ body {
   justify-content: space-between;
 }
 
+/* ========== Logo Hover ========== */
 .logo {
   height: 44px;
+  transition: transform 0.3s ease;
 }
 
-.top-nav {
-  display: flex;
-  gap: 22px;
+.logo:hover {
+  transform: scale(1.1);
 }
 
+
+/* ========== Links Nav ========== */
 .top-nav a {
   color: #ddd;
   text-decoration: none;
   font-size: 14px;
   letter-spacing: 1.2px;
+  position: relative;
+  transition: color 0.4s ease;
+}
+
+/* Animação de cor suave */
+.top-nav a:hover {
+  color: #fb913b;
+}
+
+/* Efeito underline minimalista (opcional, elegante) */
+.top-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #fb913b;
+  transition: width 0.4s ease;
+}
+
+.top-nav a:hover::after {
+  width: 100%;
 }
 
 
@@ -223,11 +249,16 @@ body {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
   transition: background 0.6s ease, color 0.6s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(255,255,255,0.8);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
-
+.work-card:hover {
+  transform: translateY(-6px); /* levanta levemente o card */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  border: 1px solid #fb913b; /* destaque elegante na borda */
+}
 /* thumb wrapper: força proporção fixa (16:9) */
 .work-card .thumb {
   width: 100%;
@@ -243,8 +274,11 @@ body {
   height: 100%;
   object-fit: cover;         /* corta centralizado, mantém o recorte cinematográfico */
   display: block;
+  transition: transform 0.6s ease;
 }
-
+.work-card:hover .thumb img {
+  transform: scale(1.08); /* zoom leve na imagem */
+}
 /* meta */
 .work-card h3 {
   margin: 16px;
@@ -260,7 +294,13 @@ body {
   color: inherit;
   transition: color 0.6s ease;
 }
+.work-card:hover h3 {
+  color: #fb913b;
+}
 
+.work-card:hover p {
+  color: #fb913b;
+}
 .carousel-controls {
   margin-top: 20px;
   display: flex;
@@ -542,6 +582,62 @@ body {
   color: #ccc;
 }
 
+/* Modal fundo escuro */
+.video-modal {
+  display: none; 
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Caixa do vídeo */
+.video-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botão de fechar */
+.close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.close-btn:hover {
+  color: #fb913b;
+}
+
+/* Wrapper que se adapta */
+.video-wrapper {
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* padrão 16:9 */
+  position: relative;
+}
+.video-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 12px;
+}
+
+/* Ajuste automático para vídeos verticais */
+.video-wrapper.vertical {
+  padding-bottom: 177.77%; /* proporção 9:16 */
+  max-width: 400px; /* limita largura para não ficar gigante */
+}
 
 
 

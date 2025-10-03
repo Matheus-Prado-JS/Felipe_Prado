@@ -34,7 +34,7 @@
 
     <div class="carousel">
       <div class="carousel-track">
-        <div class="work-card">
+        <div class="work-card" data-video="https://www.youtube.com/watch?v=SRXH9AbT280&list=RDSRXH9AbT280&start_radio=1">
           <div class="thumb">
             <!-- Substitua o src pelo link da imagem que você escolher -->
             <img src="https://images.pexels.com/photos/32939753/pexels-photo-32939753.jpeg" alt="FC Porto">
@@ -82,7 +82,7 @@
 
     <div class="carousel">
       <div class="carousel-track">
-        <div class="work-card">
+        <div class="work-card" data-video="https://www.youtube.com/shorts/Fp06q0dolO0">
           <div class="thumb">
             <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" alt="Vertical Example 1">
           </div>
@@ -229,6 +229,15 @@
 
 
 
+<!-- Modal de Vídeo -->
+<div class="video-modal" id="videoModal">
+  <div class="video-content">
+    <span class="close-btn">&times;</span>
+    <div class="video-wrapper">
+      <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>

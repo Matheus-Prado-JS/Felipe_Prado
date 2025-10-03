@@ -132,3 +132,45 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+// Abre modal com o vídeo
+document.querySelectorAll(".work-card").forEach(card => {
+  card.style.cursor = "pointer";
+  card.addEventListener("click", () => {
+    const videoUrl = card.getAttribute("data-video");
+    const modal = document.getElementById("videoModal");
+    const frame = document.getElementById("videoFrame");
+    const wrapper = document.querySelector(".video-wrapper");
+
+    if (videoUrl) {
+      // Adiciona autoplay no vídeo
+      frame.src = videoUrl + "?autoplay=1";
+
+      // Detecta se é vertical (9:16) pelo link (shorts) ou parâmetro custom
+      if (videoUrl.includes("shorts") || card.classList.contains("vertical")) {
+        wrapper.classList.add("vertical");
+      } else {
+        wrapper.classList.remove("vertical");
+      }
+
+      modal.style.display = "flex";
+    }
+  });
+});
+
+// Fecha modal
+document.querySelector(".close-btn").addEventListener("click", () => {
+  const modal = document.getElementById("videoModal");
+  const frame = document.getElementById("videoFrame");
+  modal.style.display = "none";
+  frame.src = ""; // para o vídeo
+});
+
+// Fecha clicando fora
+document.getElementById("videoModal").addEventListener("click", e => {
+  if (e.target.id === "videoModal") {
+    const modal = document.getElementById("videoModal");
+    const frame = document.getElementById("videoFrame");
+    modal.style.display = "none";
+    frame.src = "";
+  }
+});
