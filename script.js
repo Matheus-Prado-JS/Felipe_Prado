@@ -137,24 +137,37 @@ document.querySelectorAll(".work-card").forEach(card => {
   card.style.cursor = "pointer";
   card.addEventListener("click", () => {
     const videoUrl = card.getAttribute("data-video");
-    const orientation = card.getAttribute("data-orientation"); // vertical ou horizontal
+    const orientation = card.getAttribute("data-orientation"); // "vertical" ou "horizontal"
     const modal = document.getElementById("videoModal");
     const frame = document.getElementById("videoFrame");
     const wrapper = document.querySelector(".video-wrapper");
 
     if (videoUrl) {
-      const embedUrl = videoUrl.includes("?")
-        ? videoUrl + "&autoplay=1"
-        : videoUrl + "?autoplay=1";
+      // Garante autoplay e formato embed direto
+      let embedUrl = "";
+
+      if (videoUrl.includes("youtube.com/embed/")) {
+        // já é um link embed
+        embedUrl = videoUrl.includes("?")
+          ? videoUrl + "&autoplay=1"
+          : videoUrl + "?autoplay=1";
+      } else if (videoUrl.includes("youtube.com/watch?v=")) {
+        // converte link normal em embed
+        const videoId = videoUrl.split("watch?v=")[1].split("&")[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      } else if (videoUrl.includes("shorts/")) {
+        // converte Shorts em embed
+        const videoId = videoUrl.split("shorts/")[1].split("?")[0];
+        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      } else {
+        embedUrl = videoUrl;
+      }
 
       frame.src = embedUrl;
 
-      // Aplica classe vertical/horizontal conforme o atributo
-      if (orientation === "vertical") {
-        wrapper.classList.add("vertical");
-      } else {
-        wrapper.classList.remove("vertical");
-      }
+      // Define orientação de acordo com o atributo
+      wrapper.classList.remove("vertical", "horizontal");
+      wrapper.classList.add(orientation);
 
       modal.style.display = "flex";
     }
@@ -178,4 +191,5 @@ document.getElementById("videoModal").addEventListener("click", e => {
     frame.src = "";
   }
 });
+
 

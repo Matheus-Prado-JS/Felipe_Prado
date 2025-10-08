@@ -598,8 +598,9 @@ body {
 /* Caixa do vídeo */
 .video-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90%;
+  width: 90%;
+  max-width: 960px; /* limita pra não ficar exagerado */
+  aspect-ratio: 16 / 9; /* garante proporção mesmo sem padding hack */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -609,7 +610,7 @@ body {
 .close-btn {
   position: absolute;
   top: -40px;
-  right: 0;
+  right: -15px;
   font-size: 40px;
   color: #fff;
   cursor: pointer;
@@ -619,32 +620,36 @@ body {
   color: #fb913b;
 }
 
-/* Wrapper padrão (16:9) */
-.video-wrapper {
-  width: 100%;
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 */
-  position: relative;
-}
-.video-wrapper iframe {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border-radius: 12px;
-}
-
-/* Shorts (9:16) */
-.video-wrapper.vertical {
-  width: 100%;
-  max-width: 400px;   /* largura máxima */
-  height: 90vh;       /* ocupa até 90% da altura da tela */
-  padding-bottom: 0;  /* remove o hack do padding */
-}
-.video-wrapper.vertical iframe {
+/* Wrapper padrão (horizontal - 16:9) */
+.video-wrapper.horizontal {
   position: relative;
   width: 100%;
   height: 100%;
 }
+.video-wrapper.horizontal iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+/* Shorts (vertical - 9:16) */
+.video-wrapper.vertical {
+  width: 100%;
+  max-width: 400px;
+  height: 90vh;
+  padding-bottom: 0;
+  position: relative;
+}
+.video-wrapper.vertical iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+}
+
+
 
 
 
