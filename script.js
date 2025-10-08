@@ -136,33 +136,21 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll(".work-card").forEach(card => {
   card.style.cursor = "pointer";
   card.addEventListener("click", () => {
-    let videoUrl = card.getAttribute("data-video");
+    const videoUrl = card.getAttribute("data-video");
+    const orientation = card.getAttribute("data-orientation"); // vertical ou horizontal
     const modal = document.getElementById("videoModal");
     const frame = document.getElementById("videoFrame");
     const wrapper = document.querySelector(".video-wrapper");
 
     if (videoUrl) {
-      let embedUrl = "";
-
-      // Se já for embed, usa direto
-      if (videoUrl.includes("embed/")) {
-        embedUrl = videoUrl + "?autoplay=1";
-      } 
-      // Se for Shorts no formato normal
-      else if (videoUrl.includes("shorts/")) {
-        let videoId = videoUrl.split("shorts/")[1].split("?")[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      } 
-      // Se for vídeo normal no formato watch
-      else if (videoUrl.includes("watch?v=")) {
-        let videoId = videoUrl.split("watch?v=")[1].split("&")[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      }
+      const embedUrl = videoUrl.includes("?")
+        ? videoUrl + "&autoplay=1"
+        : videoUrl + "?autoplay=1";
 
       frame.src = embedUrl;
 
-      // Detecta se é vertical (Shorts) ou horizontal
-      if (videoUrl.includes("shorts") || videoUrl.includes("embed/") && wrapper) {
+      // Aplica classe vertical/horizontal conforme o atributo
+      if (orientation === "vertical") {
         wrapper.classList.add("vertical");
       } else {
         wrapper.classList.remove("vertical");
@@ -190,3 +178,4 @@ document.getElementById("videoModal").addEventListener("click", e => {
     frame.src = "";
   }
 });
+
