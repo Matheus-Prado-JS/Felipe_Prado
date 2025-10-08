@@ -132,67 +132,80 @@ window.addEventListener('scroll', () => {
     }
   });
 });
-// Abre modal com o vídeo
-document.querySelectorAll(".work-card").forEach(card => {
+const modal = document.getElementById("videoModal");
+const frame = document.getElementById("videoFrame");
+const wrapper = document.querySelector(".video-wrapper");
+const prevBtn = document.querySelector(".nav-arrow.left");
+const nextBtn = document.querySelector(".nav-arrow.right");
+
+let currentIndex = 0;
+let workCards = []; // será atualizado conforme a seção
+let sectionType = ""; // "horizontal" ou "vertical"
+
+// Função para carregar vídeo no modal
+function loadVideo(index) {
+  const card = workCards[index];
+  if (!card) return;
+
+  const videoUrl = card.getAttribute("data-video");
+  const orientation = card.getAttribute("data-orientation");
+
+  let embedUrl = "";
+
+  if (videoUrl.includes("youtube.com/embed/")) {
+    embedUrl = videoUrl.includes("?")
+      ? videoUrl + "&autoplay=1"
+      : videoUrl + "?autoplay=1";
+  } else if (videoUrl.includes("watch?v=")) {
+    const videoId = videoUrl.split("watch?v=")[1].split("&")[0];
+    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  } else if (videoUrl.includes("shorts/")) {
+    const videoId = videoUrl.split("shorts/")[1].split("?")[0];
+    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  } else {
+    embedUrl = videoUrl;
+  }
+
+  frame.src = embedUrl;
+
+  wrapper.classList.remove("vertical", "horizontal");
+  wrapper.classList.add(orientation);
+}
+
+// Abrir modal
+document.querySelectorAll(".work-card").forEach((card, index, allCards) => {
   card.style.cursor = "pointer";
   card.addEventListener("click", () => {
-    const videoUrl = card.getAttribute("data-video");
-    const orientation = card.getAttribute("data-orientation"); // "vertical" ou "horizontal"
-    const modal = document.getElementById("videoModal");
-    const frame = document.getElementById("videoFrame");
-    const wrapper = document.querySelector(".video-wrapper");
+    // Detecta se veio da seção de trabalhos horizontais ou verticais
+    const parentSection = card.closest(".trabalhos");
+    sectionType = parentSection.classList.contains("trabalhos-verticais")
+      ? "vertical"
+      : "horizontal";
 
-    if (videoUrl) {
-      // Garante autoplay e formato embed direto
-      let embedUrl = "";
+    // Filtra os vídeos só dessa seção
+    workCards = Array.from(parentSection.querySelectorAll(".work-card"));
+    currentIndex = workCards.indexOf(card);
 
-      if (videoUrl.includes("youtube.com/embed/")) {
-        // já é um link embed
-        embedUrl = videoUrl.includes("?")
-          ? videoUrl + "&autoplay=1"
-          : videoUrl + "?autoplay=1";
-      } else if (videoUrl.includes("youtube.com/watch?v=")) {
-        // converte link normal em embed
-        const videoId = videoUrl.split("watch?v=")[1].split("&")[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      } else if (videoUrl.includes("shorts/")) {
-        // converte Shorts em embed
-        const videoId = videoUrl.split("shorts/")[1].split("?")[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-      } else {
-        embedUrl = videoUrl;
-      }
-
-      frame.src = embedUrl;
-
-      // Define orientação de acordo com o atributo
-      wrapper.classList.remove("vertical", "horizontal");
-      wrapper.classList.add(orientation);
-
-      modal.style.display = "flex";
-    }
+    modal.style.display = "flex";
+    loadVideo(currentIndex);
   });
 });
 
-// Fecha modal
+// Fechar modal
 document.querySelector(".close-btn").addEventListener("click", () => {
-  const modal = document.getElementById("videoModal");
-  const frame = document.getElementById("videoFrame");
   modal.style.display = "none";
   frame.src = "";
 });
 
-// Fecha clicando fora
-document.getElementById("videoModal").addEventListener("click", e => {
+// Fechar clicando fora
+modal.addEventListener("click", e => {
   if (e.target.id === "videoModal") {
-    const modal = document.getElementById("videoModal");
-    const frame = document.getElementById("videoFrame");
     modal.style.display = "none";
     frame.src = "";
   }
 });
 
-// Navegação entre vídeos
+// Navegação pelas setas
 prevBtn.addEventListener("click", e => {
   e.stopPropagation();
   currentIndex = (currentIndex - 1 + workCards.length) % workCards.length;
@@ -204,4 +217,3 @@ nextBtn.addEventListener("click", e => {
   currentIndex = (currentIndex + 1) % workCards.length;
   loadVideo(currentIndex);
 });
-
