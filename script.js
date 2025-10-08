@@ -192,4 +192,16 @@ document.getElementById("videoModal").addEventListener("click", e => {
   }
 });
 
+// Navegação entre vídeos
+prevBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  currentIndex = (currentIndex - 1 + workCards.length) % workCards.length;
+  loadVideo(currentIndex);
+});
+
+nextBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  currentIndex = (currentIndex + 1) % workCards.length;
+  loadVideo(currentIndex);
+});
 

@@ -648,6 +648,40 @@ body {
   height: 100%;
   border-radius: 12px;
 }
+/* Setas de navegação no modal */
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 60px;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+.nav-arrow:hover {
+  color: #fb913b;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left {
+  left: -70px;
+}
+
+.nav-arrow.right {
+  right: -70px;
+}
+
+/* Ajuste para telas pequenas */
+@media (max-width: 768px) {
+  .nav-arrow.left {
+    left: 10px;
+  }
+  .nav-arrow.right {
+    right: 10px;
+  }
+}
 
 
 
