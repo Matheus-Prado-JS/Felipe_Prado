@@ -229,7 +229,7 @@ body {
 
 .carousel {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .carousel-track {
@@ -250,14 +250,9 @@ body {
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  transition: background 0.6s ease, color 0.6s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.8);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-.work-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  border: 1px solid #fb913b;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
 }
 
 /* thumb */
@@ -274,10 +269,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.6s ease;
-}
-.work-card:hover .thumb img {
-  transform: scale(1.08);
+  transition: transform 0.4s ease;
 }
 
 /* meta */
@@ -285,7 +277,7 @@ body {
   margin: 16px;
   font-size: 20px;
   color: inherit;
-  transition: color 0.6s ease;
+  transition: color 0.4s ease;
 }
 
 .work-card p {
@@ -293,11 +285,7 @@ body {
   font-size: 14px;
   flex: 1 0 auto;
   color: inherit;
-  transition: color 0.6s ease;
-}
-.work-card:hover h3,
-.work-card:hover p {
-  color: #fb913b;
+  transition: color 0.4s ease;
 }
 
 .carousel-controls {
@@ -327,13 +315,38 @@ body {
 .trabalhos-verticais .work-card .thumb {
   aspect-ratio: 9 / 16;
   background: inherit;
-  transition: background 0.6s ease, color 0.6s ease;
 }
 
 .trabalhos-verticais .work-card {
   min-width: 240px;
   max-width: 240px;
 }
+
+
+/* ==============================
+   HOVERS DE TRABALHOS
+============================== */
+
+/* Hover padrão - horizontais */
+.trabalhos .work-card:hover {
+  transform: scale(1.05);
+  border-color: #fb913b;
+  box-shadow: 0 0 20px rgba(255, 165, 80, 0.35);
+}
+.trabalhos .work-card:hover .thumb img {
+  transform: scale(1.08);
+}
+
+/* Hover verticais */
+.trabalhos-verticais .work-card:hover {
+  transform: scale(1.05);
+  border-color: #222;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+.trabalhos-verticais .work-card:hover .thumb img {
+  transform: scale(1.08);
+}
+
 
 /* ==============================
    Serviços
@@ -648,7 +661,16 @@ body {
 }
 
 @media (max-width: 768px) {
-  .nav-arrow { display: none !important; }
+  /* 🔹 Agora as setas aparecem também no mobile */
+  .nav-arrow {
+    font-size: 40px;
+    left: 10px;
+    right: 10px;
+    color: #fff;
+    opacity: 0.85;
+  }
+  .nav-arrow.left { left: 8px; }
+  .nav-arrow.right { right: 8px; }
 
   .work-card { min-width: 80%; max-width: 80%; }
   .trabalhos { padding: 40px 0; }
@@ -680,6 +702,47 @@ body {
   .container { padding: 0 18px; }
   .hero { min-height: 60vh; }
   .top-nav { gap: 12px; }
+}
+
+/* ==============================
+   🖥️ Telas Ultra Largas (21:9 ou +2000px)
+============================== */
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+  .container {
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 0 100px;
+  }
+
+  .trabalhos {
+    padding: 100px 0;
+  }
+
+  .carousel-track {
+    gap: 40px;
+  }
+
+  .work-card {
+    min-width: 380px;
+    max-width: 380px;
+  }
+
+  .video-content {
+    max-width: 1400px;
+  }
+
+  .servicos-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+  }
+
+  .quem-sou-eu-conteudo {
+    max-width: 1600px;
+  }
+
+  .titulo-contato {
+    font-size: 5rem;
+  }
 }
 
 
