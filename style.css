@@ -115,7 +115,7 @@ body {
   position: absolute;
   inset: 0;
 
-  background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+  background-image: url('https://images.pexels.com/photos/22185/pexels-photo.jpg');
   background-size: cover;
   background-position: center;
 
@@ -208,9 +208,10 @@ body {
     gap: 12px;
   }
 }
+
 /* ==============================
    Trabalhos - Carrossel (thumbs com proporção fixa)
-   ============================== */
+============================== */
 
 .trabalhos {
   padding: 60px 0;
@@ -235,13 +236,12 @@ body {
   display: flex;
   transition: transform 0.5s ease-in-out;
   gap: 24px;
-  /* padding-bottom to give breathing room under cards on small screens */
   padding-bottom: 6px;
 }
 
 /* card */
 .work-card {
-  min-width: 320px;   /* largura do card (ajuste se quiser mais estreito/largo) */
+  min-width: 320px;
   max-width: 320px;
   background: rgba(255,255,255,0.03);
   border-radius: 10px;
@@ -255,30 +255,31 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 .work-card:hover {
-  transform: translateY(-6px); /* levanta levemente o card */
+  transform: translateY(-6px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  border: 1px solid #fb913b; /* destaque elegante na borda */
+  border: 1px solid #fb913b;
 }
-/* thumb wrapper: força proporção fixa (16:9) */
+
+/* thumb */
 .work-card .thumb {
   width: 100%;
-  aspect-ratio: 16 / 9;      /* mantém a proporção visual igual para todas as imagens */
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   display: block;
   background: #0b0b0b;
 }
 
-/* img dentro da thumb: cobre e é cortada uniformemente */
 .work-card .thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;         /* corta centralizado, mantém o recorte cinematográfico */
+  object-fit: cover;
   display: block;
   transition: transform 0.6s ease;
 }
 .work-card:hover .thumb img {
-  transform: scale(1.08); /* zoom leve na imagem */
+  transform: scale(1.08);
 }
+
 /* meta */
 .work-card h3 {
   margin: 16px;
@@ -294,13 +295,11 @@ body {
   color: inherit;
   transition: color 0.6s ease;
 }
-.work-card:hover h3 {
-  color: #fb913b;
-}
-
+.work-card:hover h3,
 .work-card:hover p {
   color: #fb913b;
 }
+
 .carousel-controls {
   margin-top: 20px;
   display: flex;
@@ -322,42 +321,18 @@ body {
   background: #da7415;
 }
 
-/* responsividade (ajusta largura dos cards) */
-@media (max-width: 1000px) {
-  .work-card { min-width: 280px; max-width: 280px; }
-}
-
-@media (max-width: 600px) {
-  .carousel-track { gap: 14px; }
-  .work-card { min-width: 230px; max-width: 230px; }
-}
-
 /* ==============================
    Trabalhos Verticais
 ============================== */
 .trabalhos-verticais .work-card .thumb {
-  aspect-ratio: 9 / 16; /* agora é retrato */
+  aspect-ratio: 9 / 16;
   background: inherit;
   transition: background 0.6s ease, color 0.6s ease;
 }
 
 .trabalhos-verticais .work-card {
-  min-width: 240px;  /* ajusta largura do card */
+  min-width: 240px;
   max-width: 240px;
-}
-
-@media (max-width: 1000px) {
-  .trabalhos-verticais .work-card {
-    min-width: 200px;
-    max-width: 200px;
-  }
-}
-
-@media (max-width: 600px) {
-  .trabalhos-verticais .work-card {
-    min-width: 160px;
-    max-width: 160px;
-  }
 }
 
 /* ==============================
@@ -429,25 +404,15 @@ body {
   border-radius: 6px;
   transition: all 0.3s ease;
 }
-
 .servico-card .btn:hover {
   background: var(--accent, #ff007f);
   border-color: var(--accent, #ff007f);
   color: #fff;
 }
 
-/* responsividade */
-@media (max-width: 900px) {
-  .servicos-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .servicos .section-title {
-    font-size: 32px;
-  }
-}
-/* Section Quem Sou Eu */
+/* ==============================
+   Quem Sou Eu
+============================== */
 .quem-sou-eu {
   background: #000;
   color: #fff;
@@ -458,7 +423,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 60px; /* espaço suave entre img e texto */
+  gap: 60px;
   max-width: 1200px;
   margin: 0 auto;
   flex-wrap: wrap;
@@ -479,7 +444,7 @@ body {
 
 .quem-sou-eu-texto {
   flex: 1;
-  max-width: 550px; /* limita pra não ficar esticado demais */
+  max-width: 550px;
 }
 
 .quem-sou-eu h2 {
@@ -504,18 +469,16 @@ body {
   font-weight: bold;
   transition: 0.3s;
 }
-
 .btn-quem-sou-eu:hover {
   background: #fff;
   color: #000;
 }
 
-/* Animação scroll */
+/* animação scroll */
 .quem-sou-eu {
   opacity: 0;
   transform: translateY(50px);
 }
-
 .quem-sou-eu.show {
   opacity: 1;
   transform: translateY(0);
@@ -541,21 +504,19 @@ body {
   border-radius: 12px;
   transition: background 0.4s ease;
 }
-
 .contato-container:hover {
-  background: #c54e09; /* cinza escuro */
+  background: #c54e09;
 }
 
 .titulo-contato {
-  font-size: 4rem; /* maior */
+  font-size: 4rem;
   font-weight: 900;
-  color: #fb913b; /* laranja */
+  color: #fb913b;
   margin: 0;
   transition: color 0.4s ease;
 }
-
 .contato-container:hover .titulo-contato {
-  color: #fff; /* muda para branco */
+  color: #fff;
 }
 
 .btn-contato {
@@ -568,13 +529,11 @@ body {
   font-size: 1rem;
   transition: all 0.3s ease;
 }
-
 .contato-container:hover .btn-contato {
   border-color: #fff;
   color: #fff;
   background: transparent;
 }
-
 
 .contato-info {
   margin-top: 40px;
@@ -582,9 +541,11 @@ body {
   color: #ccc;
 }
 
-/* Modal fundo escuro */
+/* ==========================
+   Modal e Vídeos
+========================== */
 .video-modal {
-  display: none; 
+  display: none;
   position: fixed;
   z-index: 999;
   left: 0; top: 0;
@@ -595,18 +556,16 @@ body {
   padding: 20px;
 }
 
-/* Caixa do vídeo */
 .video-content {
   position: relative;
   width: 90%;
-  max-width: 960px; /* limita pra não ficar exagerado */
-  aspect-ratio: 16 / 9; /* garante proporção mesmo sem padding hack */
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Botão de fechar */
 .close-btn {
   position: absolute;
   top: -40px;
@@ -620,7 +579,7 @@ body {
   color: #fb913b;
 }
 
-/* Wrapper padrão (horizontal - 16:9) */
+/* horizontais */
 .video-wrapper.horizontal {
   position: relative;
   width: 100%;
@@ -635,7 +594,7 @@ body {
   border-radius: 12px;
 }
 
-/* Shorts (vertical - 9:16) */
+/* verticais */
 .video-wrapper.vertical {
   width: 100%;
   max-width: 400px;
@@ -648,7 +607,8 @@ body {
   height: 100%;
   border-radius: 12px;
 }
-/* Setas de navegação no modal */
+
+/* setas */
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -664,148 +624,64 @@ body {
   color: #fb913b;
   transform: translateY(-50%) scale(1.1);
 }
+.nav-arrow.left { left: -70px; }
+.nav-arrow.right { right: -70px; }
 
-.nav-arrow.left {
-  left: -70px;
-}
-
-.nav-arrow.right {
-  right: -70px;
-}
-
-/* Ajuste para telas pequenas */
-@media (max-width: 768px) {
-  .nav-arrow.left {
-    left: 10px;
-  }
-  .nav-arrow.right {
-    right: 10px;
-  }
-}
 /* ==============================
-   🌐 Responsividade aprimorada
+   📱 Responsividade (todas as telas)
 ============================== */
 
-/* === Carrossel com scroll de toque === */
-.carousel-track {
-  display: flex;
-  overflow-x: auto;               /* permite scroll horizontal no celular */
-  scroll-snap-type: x mandatory;  /* faz o snap suave no scroll */
-  -webkit-overflow-scrolling: touch;
-  gap: 18px;
-  padding-bottom: 12px;
-  scrollbar-width: none;          /* oculta scrollbar Firefox */
-}
-.carousel-track::-webkit-scrollbar {
-  display: none;                  /* oculta scrollbar Chrome/Safari */
-}
-
-/* Cada card se alinha no snap */
-.work-card {
-  scroll-snap-align: center;
-}
-
-/* Remove setas em telas menores */
-@media (max-width: 768px) {
-  .nav-arrow {
-    display: none !important;
-  }
-
-  /* Cards mais fluidos no celular */
-  .work-card {
-    min-width: 80%;
-    max-width: 80%;
-  }
-
-  /* Layout das seções mais espaçado */
-  .trabalhos {
-    padding: 40px 0;
-  }
-
-  .section-title {
-    font-size: 28px;
-    margin-bottom: 28px;
-  }
-
-  /* Ajusta vídeos verticais e horizontais */
-  .video-content {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: auto;
-  }
-
-  .video-wrapper.horizontal iframe {
-    width: 100%;
-    height: 56.25vw; /* mantém 16:9 proporcional à largura da tela */
-  }
-
-  .video-wrapper.vertical {
-    max-width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .video-wrapper.vertical iframe {
-    width: 90%;
-    height: 90vh;
-    object-fit: contain;
-  }
-
-  /* Centraliza botões e textos */
-  .servicos,
-  .quem-sou-eu,
-  .contato {
-    padding: 60px 20px;
-  }
-
-  .servicos-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  .quem-sou-eu-conteudo {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .quem-sou-eu-img img {
-    max-width: 90%;
-  }
-
-  .titulo-contato {
-    font-size: 2.5rem;
-    text-align: center;
-  }
-
-  .contato-container {
-    flex-direction: column;
-    text-align: center;
-    padding: 30px 20px;
-  }
-
-  .btn-contato {
-    margin-top: 20px;
-  }
-}
-
-/* === Ajustes adicionais para tablets === */
 @media (max-width: 1024px) and (min-width: 769px) {
-  .work-card {
-    min-width: 45%;
-    max-width: 45%;
-  }
-
-  .video-content {
-    max-width: 90%;
-  }
-
-  .servicos-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
+  .work-card { min-width: 45%; max-width: 45%; }
+  .video-content { max-width: 90%; }
+  .servicos-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
 }
+
+@media (max-width: 1000px) {
+  .work-card { min-width: 280px; max-width: 280px; }
+  .trabalhos-verticais .work-card { min-width: 200px; max-width: 200px; }
+}
+
+@media (max-width: 900px) {
+  .servicos-grid { grid-template-columns: 1fr; gap: 40px; }
+  .servicos .section-title { font-size: 32px; }
+}
+
+@media (max-width: 768px) {
+  .nav-arrow { display: none !important; }
+
+  .work-card { min-width: 80%; max-width: 80%; }
+  .trabalhos { padding: 40px 0; }
+  .section-title { font-size: 28px; margin-bottom: 28px; }
+
+  .video-content { width: 100%; max-width: 100%; aspect-ratio: auto; }
+  .video-wrapper.horizontal iframe { width: 100%; height: 56.25vw; }
+  .video-wrapper.vertical { max-width: 100%; height: auto; display: flex; justify-content: center; align-items: center; }
+  .video-wrapper.vertical iframe { width: 90%; height: 90vh; object-fit: contain; }
+
+  .servicos, .quem-sou-eu, .contato { padding: 60px 20px; }
+  .servicos-grid { grid-template-columns: 1fr; gap: 40px; }
+  .quem-sou-eu-conteudo { flex-direction: column; text-align: center; }
+  .quem-sou-eu-img img { max-width: 90%; }
+  .titulo-contato { font-size: 2.5rem; text-align: center; }
+  .contato-container { flex-direction: column; text-align: center; padding: 30px 20px; }
+  .btn-contato { margin-top: 20px; }
+}
+
+@media (max-width: 600px) {
+  .carousel-track { gap: 14px; }
+  .work-card { min-width: 230px; max-width: 230px; }
+  .trabalhos-verticais .work-card { min-width: 160px; max-width: 160px; }
+}
+
+@media (max-width: 560px) {
+  .logo { height: 34px; }
+  .wordmark { font-size: 36px; }
+  .container { padding: 0 18px; }
+  .hero { min-height: 60vh; }
+  .top-nav { gap: 12px; }
+}
+
 
 
 
