@@ -2,7 +2,7 @@
    Variáveis & Reset
 ============================== */
 :root {
-  --accent: #fb913b;
+  --accent: #fbb03b;
   --bg: #050505;
   --max-width: 1200px;
 }
@@ -21,6 +21,7 @@ body {
   font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
   color: #eaeaea;
   background: var(--bg);
+  will-change: background, color;
 }
 
 .container {
@@ -39,6 +40,7 @@ body {
   right: 0;
   top: 0;
   z-index: 40;
+  
 
   padding: 22px 0;
   background: linear-gradient(
@@ -78,7 +80,7 @@ body {
 
 /* Animação de cor suave */
 .top-nav a:hover {
-  color: #fb913b;
+  color: #fbb03b;
 }
 
 /* Efeito underline minimalista (opcional, elegante) */
@@ -89,7 +91,7 @@ body {
   bottom: -4px;
   width: 0%;
   height: 2px;
-  background: #fb913b;
+  background: #fbb03b;
   transition: width 0.4s ease;
 }
 
@@ -300,13 +302,14 @@ body {
   border: none;
   padding: 12px 18px;
   border-radius: 50%;
-  color: #fff;
+  color: #d85600;
   cursor: pointer;
   transition: 0.3s;
 }
 
 .carousel-controls button:hover {
-  background: #da7415;
+  background: #d85600;
+  color: #fbb03b;
 }
 
 /* ==============================
@@ -354,7 +357,7 @@ body {
 }
 
 .trabalhos .work-card:hover {
-  border-color: #fb913b;
+  border-color: #fbb03b;
 }
 
 .trabalhos .work-card:hover .thumb img {
@@ -512,7 +515,7 @@ body {
 .btn-quem-sou-eu {
   display: inline-block;
   padding: 12px 30px;
-  background: #fb913b;
+  background: #fbb03b;
   color: #000;
   border-radius: 30px;
   text-decoration: none;
@@ -555,7 +558,7 @@ body {
   transition: background 0.4s ease;
 }
 .contato-container:hover {
-  background: #c54e09;
+  background: #fbb03b;
 }
 
 .titulo-contato {
@@ -566,7 +569,7 @@ body {
   transition: color 0.4s ease;
 }
 .contato-container:hover .titulo-contato {
-  color: #fff;
+  color: #000000;
 }
 
 .btn-contato {
@@ -580,8 +583,8 @@ body {
   transition: all 0.3s ease;
 }
 .contato-container:hover .btn-contato {
-  border-color: #fff;
-  color: #fff;
+  border-color: #000000;
+  color: #000000;
   background: transparent;
 }
 
@@ -608,7 +611,7 @@ body {
 /* animação laranja da esquerda para direita */
 .contato-info span::before {
   content: "";
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 0;
