@@ -315,17 +315,30 @@
 
 
 
-<!-- Modal de Vídeo -->
+<!-- Modal de vídeo -->
 <div id="videoModal" class="video-modal">
   <div class="video-content">
     <span class="close-btn">&times;</span>
-    <div class="nav-arrow left">&#10094;</div>
-    <div class="video-wrapper horizontal">
-      <iframe id="videoFrame" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <!-- player customizado -->
+    <div class="video-wrapper">
+      <div class="custom-player">
+        <img src="" alt="Thumbnail do vídeo" class="video-thumb">
+        <div class="play-btn">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="48" stroke-width="2"></circle>
+            <polygon points="40,30 75,50 40,70"></polygon>
+          </svg>
+        </div>
+      </div>
+      <iframe id="videoFrame" allowfullscreen></iframe>
     </div>
-    <div class="nav-arrow right">&#10095;</div>
+
+    <span class="nav-arrow left">&#10094;</span>
+    <span class="nav-arrow right">&#10095;</span>
   </div>
 </div>
+
 
 <script src="script.js"></script>
 </body>

@@ -132,17 +132,23 @@ window.addEventListener('scroll', () => {
     }
   });
 });
+// ===============================
+// MODAL DE VÍDEOS OTIMIZADO
+// ===============================
+
+// Seletores principais (pegos uma vez só)
 const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 const wrapper = document.querySelector(".video-wrapper");
-const prevBtn = document.querySelector(".nav-arrow.left");
-const nextBtn = document.querySelector(".nav-arrow.right");
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+const closeBtn = document.querySelector(".close-btn");
 
+let workCards = [];
 let currentIndex = 0;
-let workCards = []; // será atualizado conforme a seção
-let sectionType = ""; // "horizontal" ou "vertical"
+let sectionType = "";
 
-// Função para carregar vídeo no modal
+// Função para carregar vídeo (com preview)
 function loadVideo(index) {
   const card = workCards[index];
   if (!card) return;
@@ -150,39 +156,64 @@ function loadVideo(index) {
   const videoUrl = card.getAttribute("data-video");
   const orientation = card.getAttribute("data-orientation");
 
-  let embedUrl = "";
+  // Extrai o ID do vídeo
+  let videoId = "";
+  if (videoUrl.includes("embed/")) videoId = videoUrl.split("embed/")[1];
+  else if (videoUrl.includes("watch?v=")) videoId = videoUrl.split("watch?v=")[1];
+  else if (videoUrl.includes("shorts/")) videoId = videoUrl.split("shorts/")[1];
+  videoId = videoId.split("?")[0];
 
-  if (videoUrl.includes("youtube.com/embed/")) {
-    embedUrl = videoUrl.includes("?")
-      ? videoUrl + "&autoplay=1"
-      : videoUrl + "?autoplay=1";
-  } else if (videoUrl.includes("watch?v=")) {
-    const videoId = videoUrl.split("watch?v=")[1].split("&")[0];
-    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  } else if (videoUrl.includes("shorts/")) {
-    const videoId = videoUrl.split("shorts/")[1].split("?")[0];
-    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-  } else {
-    embedUrl = videoUrl;
-  }
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+  const thumbUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
-  frame.src = embedUrl;
-
+  // Atualiza o modal
   wrapper.classList.remove("vertical", "horizontal");
   wrapper.classList.add(orientation);
+  frame.style.display = "none";
+  frame.src = "";
+
+  // Cria ou atualiza thumbnail + player customizado
+  let customPlayer = wrapper.querySelector(".custom-player");
+  let thumb = wrapper.querySelector(".video-thumb");
+
+  if (!customPlayer) {
+    customPlayer = document.createElement("div");
+    customPlayer.className = "custom-player";
+    thumb = document.createElement("img");
+    thumb.className = "video-thumb";
+    customPlayer.appendChild(thumb);
+    const playIcon = document.createElement("div");
+    playIcon.className = "play-icon";
+    playIcon.innerHTML = "▶";
+    customPlayer.appendChild(playIcon);
+    wrapper.appendChild(customPlayer);
+  }
+
+  thumb.src = thumbUrl;
+  thumb.style.opacity = "1";
+  customPlayer.style.display = "flex";
+  customPlayer.classList.remove("fade-out");
+
+  // Clique para iniciar vídeo
+  customPlayer.onclick = () => {
+    customPlayer.classList.add("fade-out");
+    setTimeout(() => {
+      customPlayer.style.display = "none";
+      frame.src = embedUrl;
+      frame.style.display = "block";
+    }, 400);
+  };
 }
 
 // Abrir modal
-document.querySelectorAll(".work-card").forEach((card, index, allCards) => {
+document.querySelectorAll(".work-card").forEach((card) => {
   card.style.cursor = "pointer";
   card.addEventListener("click", () => {
-    // Detecta se veio da seção de trabalhos horizontais ou verticais
     const parentSection = card.closest(".trabalhos");
     sectionType = parentSection.classList.contains("trabalhos-verticais")
       ? "vertical"
       : "horizontal";
 
-    // Filtra os vídeos só dessa seção
     workCards = Array.from(parentSection.querySelectorAll(".work-card"));
     currentIndex = workCards.indexOf(card);
 
@@ -192,13 +223,13 @@ document.querySelectorAll(".work-card").forEach((card, index, allCards) => {
 });
 
 // Fechar modal
-document.querySelector(".close-btn").addEventListener("click", () => {
+closeBtn.addEventListener("click", () => {
   modal.style.display = "none";
   frame.src = "";
 });
 
 // Fechar clicando fora
-modal.addEventListener("click", e => {
+modal.addEventListener("click", (e) => {
   if (e.target.id === "videoModal") {
     modal.style.display = "none";
     frame.src = "";
@@ -206,14 +237,15 @@ modal.addEventListener("click", e => {
 });
 
 // Navegação pelas setas
-prevBtn.addEventListener("click", e => {
+prevBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   currentIndex = (currentIndex - 1 + workCards.length) % workCards.length;
   loadVideo(currentIndex);
 });
 
-nextBtn.addEventListener("click", e => {
+nextBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   currentIndex = (currentIndex + 1) % workCards.length;
   loadVideo(currentIndex);
 });
+
