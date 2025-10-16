@@ -315,30 +315,28 @@
 
 
 
-<!-- Modal de vídeo -->
+<!-- Modal de Vídeo -->
 <div id="videoModal" class="video-modal">
   <div class="video-content">
     <span class="close-btn">&times;</span>
-
-    <!-- player customizado -->
-    <div class="video-wrapper">
-      <div class="custom-player">
-        <img src="" alt="Thumbnail do vídeo" class="video-thumb">
-        <div class="play-btn">
-          <svg viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="48" stroke-width="2"></circle>
-            <polygon points="40,30 75,50 40,70"></polygon>
-          </svg>
-        </div>
-      </div>
-      <iframe id="videoFrame" allowfullscreen></iframe>
+    <div class="nav-arrow left">&#10094;</div>
+    <div class="video-wrapper horizontal">
+  <div class="custom-player">
+    <video id="customVideo" src="" autoplay playsinline></video>
+    <div class="controls">
+      <button class="play-pause">
+        <svg viewBox="0 0 24 24" class="icon play"><path d="M8 5v14l11-7z"/></svg>
+        <svg viewBox="0 0 24 24" class="icon pause"><path d="M6 19h4V5H6zm8-14v14h4V5h-4z"/></svg>
+      </button>
+      <div class="progress-bar"><div class="progress"></div></div>
+      <span class="time">0:00</span>
     </div>
-
-    <span class="nav-arrow left">&#10094;</span>
-    <span class="nav-arrow right">&#10095;</span>
   </div>
 </div>
 
+    <div class="nav-arrow right">&#10095;</div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
