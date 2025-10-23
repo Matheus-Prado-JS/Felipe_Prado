@@ -909,6 +909,54 @@ body {
   color: #fff;
   user-select: none;
 }
+/* ===============================
+   Custom Player Volume Control
+=============================== */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fb913b;
+  box-shadow: 0 0 6px rgba(251, 145, 59, 0.6);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.volume::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #ffae5a;
+}
+
+.volume:hover {
+  background: rgba(251, 145, 59, 0.4);
+}
+
+.time {
+  color: #fb913b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 
 
 
