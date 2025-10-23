@@ -141,6 +141,12 @@ const nextBtn = document.querySelector(".nav-arrow.right");
 let currentIndex = 0;
 let workCards = []; // será atualizado conforme a seção
 let sectionType = ""; // "horizontal" ou "vertical"
+let player; // instância da API do YouTube
+
+// ===============================
+// Função chamada automaticamente pela API do YouTube
+// ===============================
+function onYouTubeIframeAPIReady() {}
 
 // ===============================
 // Função para carregar vídeo no modal (player customizado)
@@ -151,11 +157,8 @@ function loadVideo(index) {
 
   const videoUrl = card.getAttribute("data-video");
   const orientation = card.getAttribute("data-orientation");
-
-  // cria o iframe customizado com parâmetros que escondem o player padrão
-  const embedUrl = videoUrl.includes("?")
-    ? videoUrl + "&autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
-    : videoUrl + "?autoplay=1&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3";
+  const videoId = extractVideoId(videoUrl);
+  if (!videoId) return;
 
   const wrapper = document.querySelector(".video-wrapper");
   wrapper.classList.remove("vertical", "horizontal");
@@ -163,7 +166,7 @@ function loadVideo(index) {
 
   const customPlayer = wrapper.querySelector(".custom-player");
   customPlayer.innerHTML = `
-    <iframe id="videoFrame" src="${embedUrl}" allow="autoplay; fullscreen" frameborder="0"></iframe>
+    <div id="videoFrame"></div>
     <div class="controls">
       <button class="play-pause">
         <svg viewBox="0 0 24 24" class="icon play"><path d="M8 5v14l11-7z"/></svg>
@@ -171,29 +174,102 @@ function loadVideo(index) {
       </button>
       <div class="progress-bar"><div class="progress"></div></div>
       <span class="time">0:00</span>
+      <input type="range" class="volume" min="0" max="100" value="100" />
     </div>
   `;
 
-  // marca o player como "tocando" (muda ícone)
   customPlayer.classList.add("playing");
 
-  const playPauseBtn = customPlayer.querySelector(".play-pause");
+  // Cria o player YouTube via API
+  player = new YT.Player("videoFrame", {
+    videoId,
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+    },
+    events: {
+      onReady: setupCustomControls,
+      onStateChange: syncPlayPauseIcon,
+    },
+  });
+}
+
+// ===============================
+// Extrai ID de vídeo de várias URLs
+// ===============================
+function extractVideoId(url) {
+  if (url.includes("watch?v=")) return url.split("watch?v=")[1].split("&")[0];
+  if (url.includes("shorts/")) return url.split("shorts/")[1].split("?")[0];
+  if (url.includes("embed/")) return url.split("embed/")[1].split("?")[0];
+  return null;
+}
+
+// ===============================
+// Liga os controles customizados
+// ===============================
+function setupCustomControls() {
+  const playPauseBtn = document.querySelector(".play-pause");
+  const progressBar = document.querySelector(".progress-bar");
+  const progress = document.querySelector(".progress");
+  const timeLabel = document.querySelector(".time");
+  const volumeControl = document.querySelector(".volume");
+
   playPauseBtn.addEventListener("click", () => {
-    const frame = document.getElementById("videoFrame");
-    if (customPlayer.classList.contains("playing")) {
-      customPlayer.classList.remove("playing");
-      frame.contentWindow.postMessage(
-        '{"event":"command","func":"pauseVideo","args":""}',
-        "*"
-      );
+    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+      player.pauseVideo();
     } else {
-      customPlayer.classList.add("playing");
-      frame.contentWindow.postMessage(
-        '{"event":"command","func":"playVideo","args":""}',
-        "*"
-      );
+      player.playVideo();
     }
   });
+
+  volumeControl.addEventListener("input", e => {
+    player.setVolume(e.target.value);
+  });
+
+  // Atualiza progresso e tempo
+  setInterval(() => {
+    if (player && player.getDuration) {
+      const current = player.getCurrentTime();
+      const total = player.getDuration();
+      if (total > 0) {
+        const percent = (current / total) * 100;
+        progress.style.width = percent + "%";
+        timeLabel.textContent = formatTime(current);
+      }
+    }
+  }, 500);
+
+  // Clicar na barra para mudar o tempo
+  progressBar.addEventListener("click", e => {
+    const rect = progressBar.getBoundingClientRect();
+    const percent = (e.clientX - rect.left) / rect.width;
+    const newTime = percent * player.getDuration();
+    player.seekTo(newTime, true);
+  });
+}
+
+// ===============================
+// Atualiza ícone play/pause
+// ===============================
+function syncPlayPauseIcon(event) {
+  const customPlayer = document.querySelector(".custom-player");
+  if (event.data === YT.PlayerState.PLAYING) {
+    customPlayer.classList.add("playing");
+  } else {
+    customPlayer.classList.remove("playing");
+  }
+}
+
+// ===============================
+// Formata tempo (segundos → mm:ss)
+// ===============================
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
 }
 
 // ===============================
@@ -220,16 +296,16 @@ document.querySelectorAll(".work-card").forEach((card) => {
 // ===============================
 document.querySelector(".close-btn").addEventListener("click", () => {
   modal.style.display = "none";
-  const frame = document.getElementById("videoFrame");
-  if (frame) frame.src = "";
+  if (player) player.stopVideo();
 });
 
-// Fechar clicando fora
+// ===============================
+// Fechar clicando fora do modal
+// ===============================
 modal.addEventListener("click", e => {
   if (e.target.id === "videoModal") {
     modal.style.display = "none";
-    const frame = document.getElementById("videoFrame");
-    if (frame) frame.src = "";
+    if (player) player.stopVideo();
   }
 });
 
@@ -247,4 +323,5 @@ nextBtn.addEventListener("click", e => {
   currentIndex = (currentIndex + 1) % workCards.length;
   loadVideo(currentIndex);
 });
+
 
