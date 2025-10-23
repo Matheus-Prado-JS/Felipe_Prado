@@ -737,34 +737,122 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 🔹 Agora as setas aparecem também no mobile */
+  /* 🔹 Reorganização geral para mobile */
+  .work-card {
+    min-width: 80%;
+    max-width: 80%;
+  }
+
+  .trabalhos {
+    padding: 40px 0;
+  }
+
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+
+  .video-content {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* 🔸 Ajuste da área do vídeo */
+  .video-wrapper.horizontal iframe {
+    width: 100%;
+    height: 56.25vw;
+  }
+
+  .video-wrapper.vertical {
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .video-wrapper.vertical iframe {
+    width: 90%;
+    height: 90vh;
+    object-fit: contain;
+  }
+
+  /* 🔸 NOVO: posicionamento das setas no mobile */
   .nav-arrow {
+    position: relative; /* deixa de ser absoluta */
     font-size: 40px;
-    left: 10px;
-    right: 10px;
     color: #fff;
     opacity: 0.85;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
-  .nav-arrow.left { left: 8px; }
-  .nav-arrow.right { right: 8px; }
 
-  .work-card { min-width: 80%; max-width: 80%; }
-  .trabalhos { padding: 40px 0; }
-  .section-title { font-size: 28px; margin-bottom: 28px; }
+  .nav-arrow:hover {
+    transform: scale(1.2);
+    opacity: 1;
+  }
 
-  .video-content { width: 100%; max-width: 100%; aspect-ratio: auto; }
-  .video-wrapper.horizontal iframe { width: 100%; height: 56.25vw; }
-  .video-wrapper.vertical { max-width: 100%; height: auto; display: flex; justify-content: center; align-items: center; }
-  .video-wrapper.vertical iframe { width: 90%; height: 90vh; object-fit: contain; }
+  /* 🔸 Contêiner para centralizar as setas */
+  .video-nav-mobile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 12px;
+  }
 
-  .servicos, .quem-sou-eu, .contato { padding: 60px 20px; }
-  .servicos-grid { grid-template-columns: 1fr; gap: 40px; }
-  .quem-sou-eu-conteudo { flex-direction: column; text-align: center; }
-  .quem-sou-eu-img img { max-width: 90%; }
-  .titulo-contato { font-size: 2.5rem; text-align: center; }
-  .contato-container { flex-direction: column; text-align: center; padding: 30px 20px; }
-  .btn-contato { margin-top: 20px; }
+  /* 🔸 Esconde o layout antigo das setas (laterais) */
+  .video-content .nav-arrow.left,
+  .video-content .nav-arrow.right {
+    position: relative !important;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+
+  /* 🔸 Outras seções */
+  .servicos,
+  .quem-sou-eu,
+  .contato {
+    padding: 60px 20px;
+  }
+
+  .servicos-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .quem-sou-eu-conteudo {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .quem-sou-eu-img img {
+    max-width: 90%;
+  }
+
+  .titulo-contato {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+
+  .contato-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .btn-contato {
+    margin-top: 20px;
+  }
 }
+
 
 @media (max-width: 600px) {
   .carousel-track { gap: 14px; }
