@@ -737,7 +737,7 @@ body {
 }
 
 @media (max-width: 768px) {
-  /* 🔹 Reorganização geral para mobile */
+  /* ======== LAYOUT GERAL ======== */
   .work-card {
     min-width: 80%;
     max-width: 80%;
@@ -755,17 +755,18 @@ body {
   .video-content {
     width: 100%;
     max-width: 100%;
-    aspect-ratio: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
   }
 
-  /* 🔸 Ajuste da área do vídeo */
+  /* ======== AJUSTE DOS VÍDEOS ======== */
   .video-wrapper.horizontal iframe {
     width: 100%;
-    height: 56.25vw;
+    height: 210px; /* 🔹 altura fixa garante exibição no mobile */
+    display: block;
+    border-radius: 12px;
   }
 
   .video-wrapper.vertical {
@@ -778,45 +779,42 @@ body {
 
   .video-wrapper.vertical iframe {
     width: 90%;
-    height: 90vh;
+    height: 80vh;
     object-fit: contain;
+    display: block;
+    border-radius: 12px;
   }
 
-  /* 🔸 NOVO: posicionamento das setas no mobile */
-  .nav-arrow {
-    position: relative; /* deixa de ser absoluta */
-    font-size: 40px;
-    color: #fff;
-    opacity: 0.85;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .nav-arrow:hover {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-
-  /* 🔸 Contêiner para centralizar as setas */
+  /* ======== SETAS ABAIXO DO VÍDEO ======== */
   .video-nav-mobile {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 40px;
-    margin-top: 12px;
+    margin-top: 20px; /* 🔹 espaço entre vídeo e setas */
   }
 
-  /* 🔸 Esconde o layout antigo das setas (laterais) */
+  .nav-arrow {
+    position: relative;
+    font-size: 40px;
+    color: #fff;
+    opacity: 0.9;
+    cursor: pointer;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav-arrow:hover {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+  /* 🔸 Esconde o layout lateral antigo */
   .video-content .nav-arrow.left,
   .video-content .nav-arrow.right {
-    position: relative !important;
-    top: auto;
-    left: auto;
-    right: auto;
-    transform: none;
+    display: none !important;
   }
 
-  /* 🔸 Outras seções */
+  /* ======== OUTRAS SEÇÕES ======== */
   .servicos,
   .quem-sou-eu,
   .contato {
@@ -852,6 +850,7 @@ body {
     margin-top: 20px;
   }
 }
+
 
 
 @media (max-width: 600px) {
