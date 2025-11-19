@@ -74,6 +74,64 @@ function initCarousels() {
     recalc();
   });
 }
+/* ================================
+   Swipe para carrosséis (mobile)
+================================ */
+document.querySelectorAll('.carousel-track').forEach(track => {
+  
+  let startX = 0;
+  let scrollLeft = 0;
+  let isDown = false;
+
+  track.addEventListener('touchstart', (e) => {
+    isDown = true;
+    startX = e.touches[0].pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  track.addEventListener('touchmove', (e) => {
+    if (!isDown) return;
+    const x = e.touches[0].pageX - track.offsetLeft;
+    const walk = (x - startX);
+    track.scrollLeft = scrollLeft - walk;
+  });
+
+  track.addEventListener('touchend', () => {
+    isDown = false;
+  });
+});
+/* ================================
+   Swipe dentro do modal
+================================ */
+(function() {
+
+  const modal = document.getElementById("videoModal");
+  const leftVideoBtn = modal.querySelector(".nav-arrow.left");
+  const rightVideoBtn = modal.querySelector(".nav-arrow.right");
+
+  let startX = 0;
+  let endX = 0;
+
+  modal.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  modal.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].clientX;
+    const diff = endX - startX;
+
+    if (Math.abs(diff) < 50) return; // swipe muito fraco, ignora
+
+    if (diff > 0) {
+      // arrastou para a direita = vídeo anterior
+      leftVideoBtn?.click();
+    } else {
+      // arrastou para a esquerda = próximo vídeo
+      rightVideoBtn?.click();
+    }
+  });
+
+})();
 
 /* ===========================
    Tema claro: inicia em .trabalhos-verticais e termina depois de .servicos

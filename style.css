@@ -1045,6 +1045,24 @@ body {
   font-weight: 500;
 }
 
+/* ======== REMOVE TODAS AS SETAS NO MOBILE ======== */
+@media (max-width: 768px) {
+
+  /* remove setas do carrossel */
+  .carousel-controls {
+    display: none !important;
+  }
+
+  /* remove setas laterais do modal */
+  .video-content .nav-arrow {
+    display: none !important;
+  }
+
+  /* remove setas colocadas no mobile também */
+  .video-nav-mobile {
+    display: none !important;
+  }
+}
 
 
 
