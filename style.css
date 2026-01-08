@@ -526,7 +526,12 @@ body {
 .contato-container:hover .btn-contato {
   border-color: #000000;
   color: #000000;
-  background: transparent;
+}
+.btn-contato:hover {
+  background: #ffffff3f;
+  color: #000000;
+  border-color: #000000;
+  transform: translateY(-1.2px);
 }
 
 /* ==========================
