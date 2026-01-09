@@ -155,7 +155,10 @@ body {
   letter-spacing: 2px;
   color: #fff;
 }
-
+.wordmark .hover {
+  color: var(--accent);
+  transition: color 0.4s ease;
+}
 .wordmark .dot {
   display: inline-block;
   width: 22px;
@@ -225,7 +228,7 @@ body {
 .section-title {
   font-size: 36px;
   margin-bottom: 40px;
-  text-align: center;
+  text-align: left;
   font-family: Oswald, sans-serif;
 }
 
@@ -246,7 +249,7 @@ body {
   min-width: 320px;
   max-width: 320px;
   background: rgba(255,255,255,0.03);
-  border-radius: 10px;
+  border-radius: 14px;
   overflow: visible; /* 🔑 IMPORTANTE */
   flex-shrink: 0;
   display: flex;
@@ -255,6 +258,12 @@ body {
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   transition: box-shadow 0.5s ease;
+  transform-origin: center;
+  will-change: transform;
+}
+.trabalhos,
+.trabalhos-verticais {
+  overflow-x: hidden;
 }
 
 
@@ -262,9 +271,11 @@ body {
 .work-card .thumb {
   width: 100%;
   aspect-ratio: 16 / 9;
-  overflow: visible;
+  overflow: hidden;
   display: block;
   background: #0b0b0b;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
 }
 
 .work-card .thumb img {
@@ -272,6 +283,8 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
@@ -454,18 +467,30 @@ body {
 }
 
 .btn-quem-sou-eu {
-  display: inline-block;
-  padding: 12px 30px;
-  background: #fbb03b;
-  color: #000;
+  padding: 12px 26px;
+  border: 2px solid #fb913b;
+  color: #fb913b;
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
-  transition: 0.3s;
+  font-size: 1rem;
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 .btn-quem-sou-eu:hover {
-  background: #fff;
+  background: #fb913b;
   color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
+}
+.btn-quem-sou-eu {
+  display: inline-flex; /* 🔑 */
+  align-items: center;
+  justify-content: center;
 }
 
 /* animação scroll */
@@ -489,50 +514,55 @@ body {
 
 .contato-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;   /* 🔑 muda para coluna */
+  align-items: flex-start;  /* 🔑 alinha à esquerda */
+  gap: 18px;                /* espaço entre texto e botão */
+
   max-width: 2000px;
   margin: 0 auto;
   background: #000;
-  padding: 40px 60px;
+  padding: 20px 60px;
   border-radius: 12px;
-  transition: background 0.4s ease;
-}
-.contato-container:hover {
-  background: #fbb03b;
 }
 
+
 .titulo-contato {
-  font-size: 4rem;
+  font-size: 2rem;
   font-weight: 900;
   color: #fb913b;
   margin: 0;
-  transition: color 0.4s ease;
-}
-.contato-container:hover .titulo-contato {
-  color: #000000;
+  transition: color 0.35s ease, transform 0.35s ease;
 }
 
+.titulo-contato:hover {
+  color: #ffd18a; /* laranja mais claro */
+  transform: translateY(-2px);
+}
+
+
 .btn-contato {
-  padding: 10px 20px;
+  padding: 12px 26px;
   border: 2px solid #fb913b;
   color: #fb913b;
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
-.contato-container:hover .btn-contato {
-  border-color: #000000;
-  color: #000000;
-}
+
 .btn-contato:hover {
-  background: #ffffff3f;
-  color: #000000;
-  border-color: #000000;
-  transform: translateY(-1.2px);
+  background: #fb913b;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
 }
+
 
 /* ==========================
    Contato Info - hover individual e animado
@@ -540,39 +570,46 @@ body {
 .contato-info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 40px;
-  font-size: 1rem;
+  gap: 14px;
+  margin-top: 32px;
+  font-size: 0.95rem;
+  padding-left: 50px;
 }
 
 .contato-info span {
-  position: relative;
   display: inline-block;
-  color: #ccc;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
-  overflow: hidden;
-  transition: color 0.3s ease;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease,
+    letter-spacing 0.3s ease;
 }
 
 /* animação laranja da esquerda para direita */
-.contato-info span::before {
-  content: "";
-  position: relative;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background: #fb913b;
-  transition: width 0.4s ease;
-}
-
 .contato-info span:hover {
   color: #fb913b;
+  transform: translateX(6px);
+  letter-spacing: 0.4px;
+}
+
+.contato-info span::before {
+  content: "›";
+  color: #fb913b;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .contato-info span:hover::before {
-  width: 100%;
+  opacity: 1;
+  transform: translateX(0);
 }
+
 
 
 
@@ -599,6 +636,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
+
 }
 
 .close-btn {
@@ -659,8 +698,8 @@ body {
   color: #fb913b;
   transform: translateY(-50%) scale(1.1);
 }
-.nav-arrow.left { left: -70px; }
-.nav-arrow.right { right: -70px; }
+.nav-arrow.left { left: 12px; }
+.nav-arrow.right { right: 12px; }
 
 /* ==============================
    📱 Responsividade (todas as telas)
@@ -1035,9 +1074,49 @@ body {
 
 .work-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
 }
 
+.trabalhos-verticais .work-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(251, 145, 59, 0.4);
+}
 
+/* ==============================
+   Scrollbar Custom (Chromium / Brave)
+============================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000 transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #fb913b,
+    #fbb03b
+  );
+  border-radius: 999px;
+  border: 2px solid #000 transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ffd18a,
+    #fb913b
+  );
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fb913b transparent;
+}
 
 
 
@@ -1049,36 +1128,36 @@ body {
    Tema Claro para Serviços
 ============================== */
 body.light-theme {
-  background: #ffffff;
-  color: #000;
+  background: #0c0b0b;
+  color: #ffffff;
   transition: background 0.6s ease, color 0.6s ease;
 }
 
 body.light-theme .site-header {
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.55));
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.85), rgba(10, 10, 10, 0.55));
 }
 /* quando o site ficar claro, inverse o fundo do card */
 body.light-theme .work-card {
   background: rgba(0,0,0,0.09); /* sutil em modo claro */
-  border: 1px solid rgba(0,0,0,0.08);
+  border: 1px solid rgba(22, 22, 22, 0.08);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 body.light-theme .site-header .top-nav a {
-  color: #111;
+  color: #ffffff;
 }
 
 body.light-theme .section-title,
 body.light-theme .servico-card h3 {
-  color: #111;
+  color: #ffffff;
 }
 
 body.light-theme .servico-card p {
-  color: #444;
+  color: #b1b1b1;
 }
 
 body.light-theme .btn {
-  border-color: #000;
-  color: #000;
+  border-color: #ffffff;
+  color: #ffffff;
 }
 
 

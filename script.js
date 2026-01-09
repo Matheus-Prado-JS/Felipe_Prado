@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggleBetweenSections();
 });
 
+
+
 /* ===========================
    Carousels (suporta múltiplos carousels na página)
    =========================== */
