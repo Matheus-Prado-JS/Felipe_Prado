@@ -51,16 +51,18 @@ function initCarousels() {
       track.style.transform = `translateX(-${translate}px)`;
     }
 
+    const STEP = 3; // quantos cards por clique
+
     if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        index++;
-        // limite superior calculado por update()
-        update();
-      });
-    }
+        nextBtn.addEventListener('click', () => {
+    index += STEP;
+    update();
+        });
+      }
+
     if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        index = Math.max(0, index - 1);
+    prevBtn.addEventListener('click', () => {
+        index = Math.max(0, index - STEP);
         update();
       });
     }
@@ -76,6 +78,7 @@ function initCarousels() {
     recalc();
   });
 }
+
 /* ================================
    Swipe para carrosséis (mobile)
 ================================ */
