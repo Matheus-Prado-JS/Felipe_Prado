@@ -387,4 +387,3 @@ nextBtn.addEventListener("click", e => {
   loadVideo(currentIndex);
 });
 
-

@@ -655,7 +655,6 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  pointer-events: none;
 }
 
 .close-btn {
@@ -687,20 +686,22 @@ body {
   pointer-events: none;
 }
 
-/* verticais */
+/* verticais – desktop */
 .video-wrapper.vertical {
-  width: 100%;
-  max-width: 400px;
-  height: 90vh;
-  padding-bottom: 0;
-  position: relative;
+  width: auto;
+  max-width: 380px;
+  max-height: calc(100vh - 160px); /* sobra para close + padding */
+  aspect-ratio: 9 / 16;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .video-wrapper.vertical iframe {
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  pointer-events: none;
 }
+
 
 /* setas */
 .nav-arrow {
@@ -1167,5 +1168,4 @@ body.light-theme .btn {
   border-color: #ffffff;
   color: #ffffff;
 }
-
 
