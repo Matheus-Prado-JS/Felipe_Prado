@@ -655,7 +655,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-
+  pointer-events: none;
 }
 
 .close-btn {
@@ -678,12 +678,13 @@ body {
   height: 100%;
 }
 .video-wrapper.horizontal iframe {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   border-radius: 12px;
+  pointer-events: none;
 }
 
 /* verticais */
@@ -698,6 +699,7 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 12px;
+  pointer-events: none;
 }
 
 /* setas */
@@ -707,10 +709,15 @@ body {
   transform: translateY(-50%);
   font-size: 60px;
   color: #fff;
+  pointer-events: auto;
   cursor: pointer;
   user-select: none;
   transition: color 0.3s ease, transform 0.2s ease;
-  z-index: 1000;
+  z-index: 50;
+}
+.nav-arrow,
+.close-btn {
+  pointer-events: auto;
 }
 .nav-arrow:hover {
   color: #fb913b;
