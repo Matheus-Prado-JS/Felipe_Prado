@@ -1,4 +1,3 @@
-// script.js (substituir inteiramente pelo conteúdo abaixo)
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM carregado — iniciando scripts');
   initCarousels();
@@ -29,53 +28,33 @@ function initCarousels() {
     const trackStyle = window.getComputedStyle(track);
     const gap = parseFloat(trackStyle.gap || trackStyle.columnGap || '24') || 24;
 
-    let cardWidth = cards[0].getBoundingClientRect().width;
-    let index = 0;
-
-    function recalc() {
-      cardWidth = cards[0].getBoundingClientRect().width;
-      update(); // atualiza posição ao redimensionar
-    }
-
-    function getMaxTranslate() {
-      const visibleWidth = carousel.clientWidth;
-      const totalWidth = cards.length * cardWidth + gap * (cards.length - 1);
-      return Math.max(0, totalWidth - visibleWidth);
-    }
-
-    function update() {
-      const maxTranslate = getMaxTranslate();
-      let translate = index * (cardWidth + gap);
-      if (translate > maxTranslate) translate = maxTranslate;
-      if (translate < 0) translate = 0;
-      track.style.transform = `translateX(-${translate}px)`;
-    }
-
-    const STEP = 3; // quantos cards por clique
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-    index += STEP;
-    update();
-        });
-      }
-
-    if (prevBtn) {
-    prevBtn.addEventListener('click', () => {
-        index = Math.max(0, index - STEP);
-        update();
-      });
-    }
-
-    // Atualiza dimensões ao redimensionar a janela
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(recalc, 120);
-    });
-
-    // inicializa
-    recalc();
+    const isVertical = carousel.classList.contains('trabalhos-verticais');
+    const SNAP_INDEX = isVertical ? 3 : 2;
+    let currentSnap = 0;
+    function getCardPosition(cardIndex) {
+  let pos = 0;
+  for (let i = 0; i < cardIndex && i < cards.length; i++) {
+    pos += cards[i].offsetWidth + gap;
+  }
+  return pos;
+}
+nextBtn?.addEventListener('click', () => {
+  currentSnap++;
+  const targetIndex = SNAP_INDEX * currentSnap;
+  const translate = getCardPosition(targetIndex);
+  track.style.transform = `translateX(-${translate}px)`;
+});
+prevBtn?.addEventListener('click', () => {
+  currentSnap = Math.max(0, currentSnap - 1);
+  const targetIndex = SNAP_INDEX * currentSnap;
+  const translate = getCardPosition(targetIndex);
+  track.style.transform = `translateX(-${translate}px)`;
+});
+window.addEventListener('resize', () => {
+  const targetIndex = SNAP_INDEX * currentSnap;
+  const translate = getCardPosition(targetIndex);
+  track.style.transform = `translateX(-${translate}px)`;
+});
   });
 }
 

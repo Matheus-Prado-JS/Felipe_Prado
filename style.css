@@ -324,13 +324,16 @@ body {
 }
 
 .carousel-controls {
-  margin-top: 20px;
+  margin-top: 24px;
   display: flex;
-  justify-content: left;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  position: relative;
 }
 
 .carousel-controls button {
+  position: absolute;
   background: var(--accent);
   border: none;
   padding: 12px 18px;
@@ -344,6 +347,30 @@ body {
   background: rgb(19, 19, 19);
   color: #fbb03b;
 }
+.carousel-track {
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.trabalhos .carousel-controls .prev {
+  left: 58%;
+  transform: translateX(-50px); /* controla distância */
+}
+
+.trabalhos .carousel-controls .next {
+  left: 58%;
+  transform: translateX(35px); /* controla distância */
+}
+
+.trabalhos-verticais .carousel-controls .prev {
+  left: 50%;
+  transform: translateX(-36px);
+}
+
+.trabalhos-verticais .carousel-controls .next {
+  left: 50%;
+  transform: translateX(148px);
+}
+
 
 /* ==============================
    Trabalhos Verticais
@@ -532,16 +559,17 @@ body {
 
 .contato-container {
   display: flex;
-  flex-direction: column;   /* 🔑 muda para coluna */
-  align-items: flex-start;  /* 🔑 alinha à esquerda */
-  gap: 15px;                /* espaço entre texto e botão */
+  align-items: center;              /* 🔑 mesma altura */
+  justify-content: space-between;   /* 🔑 texto esquerda / botão direita */
+  gap: 60px;                        /* espaçamento grande central */
 
   max-width: 2000px;
   margin: 0 auto;
   background: #000;
-  padding: 20px 60px;
+  padding: 24px 60px;
   border-radius: 12px;
 }
+
 
 
 .titulo-contato {
@@ -918,6 +946,52 @@ body {
     font-size: 5rem;
   }
 }
+/* ==========================
+   🖥️ Contato — telas ultra largas
+========================== */
+@media (min-width: 1400px) {
+  .titulo-contato {
+    font-size: 2.3rem;     /* cresce, mas com controle */
+  }
+
+  .btn-contato {
+    font-size: 1.05rem;
+    padding: 14px 32px;
+  }
+
+  .contato-container {
+    padding: 32px 100px;   /* mais respiro lateral */
+  }
+}
+/* ==============================
+   Carrossel Trabalhos — telas ultra largas
+============================== */
+@media (min-width: 2400px) {
+
+  /* Trabalhos horizontais */
+  .trabalhos .carousel-controls .prev {
+    left: 44%;                 /* move o eixo central */
+    transform: translateX(-40px);
+  }
+
+  .trabalhos .carousel-controls .next {
+    left: 44%;
+    transform: translateX(40px);
+  }
+
+  /* Trabalhos verticais */
+  .trabalhos-verticais .carousel-controls .prev {
+    left: 45%;
+    transform: translateX(-50px);
+  }
+
+  .trabalhos-verticais .carousel-controls .next {
+    left: 44%;
+    transform: translateX(50px);
+  }
+
+}
+
 /* ==============================
    Player Customizado
 ============================== */
