@@ -258,6 +258,11 @@ function extractVideoId(url) {
   return null;
 }
 
+
+
+
+
+
 // ===============================
 // Liga os controles customizados
 // ===============================
@@ -275,6 +280,23 @@ function setupCustomControls() {
       player.playVideo();
     }
   });
+const fullscreenBtn = document.querySelector(".fullscreen-btn");
+
+fullscreenBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  if (!player) return;
+
+  const iframe = player.getIframe();
+
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    iframe.requestFullscreen?.();
+    iframe.webkitRequestFullscreen?.();
+  } else {
+    document.exitFullscreen?.();
+    document.webkitExitFullscreen?.();
+  }
+});
 
   volumeControl.addEventListener("input", e => {
     player.setVolume(e.target.value);
@@ -301,6 +323,12 @@ function setupCustomControls() {
     player.seekTo(newTime, true);
   });
 }
+ // Garantir que Progress, Volume, Full não disparem o player por acidente
+ document.querySelectorAll(".controls *").forEach(el => {
+  el.addEventListener("click", e => {
+    e.stopPropagation();
+  });
+});
 
 // ===============================
 // Atualiza ícone play/pause
@@ -340,40 +368,19 @@ function formatTime(sec) {
   };
 
   // Clique desktop
-  customPlayer.addEventListener("click", togglePlay);
+ customPlayer.addEventListener("click", (e) => {
+  // Se clicou em algum controle, ignora
+  if (e.target.closest(".controls")) return;
+
+  togglePlay();
+});
 
   // Touch mobile / Safari
   customPlayer.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    togglePlay();
-  }, { passive: false });
+  if (e.target.closest(".controls")) return;
+  togglePlay();
+}, { passive: true });
 
-  // ===============================
-// Fullscreen
-// ===============================
-const fullscreenBtn = document.querySelector(".fullscreen-btn");
-
-if (fullscreenBtn) {
-  fullscreenBtn.addEventListener("click", (e) => {
-    e.stopPropagation(); // não pausar vídeo nem fechar modal
-
-    const playerWrapper = document.querySelector(".video-wrapper");
-
-    if (!document.fullscreenElement) {
-      if (playerWrapper.requestFullscreen) {
-        playerWrapper.requestFullscreen();
-      } else if (playerWrapper.webkitRequestFullscreen) {
-        playerWrapper.webkitRequestFullscreen(); // Safari
-      }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen(); // Safari
-      }
-    }
-  });
-}
 
 
 // ===============================
