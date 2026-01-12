@@ -1098,12 +1098,15 @@ body {
   transition: background 0.25s ease, transform 0.25s ease;
 }
 .fullscreen-btn .icon {
-  fill: #fb913b;
+  fill: none;
+  stroke: #fb913b;
   width: 22px;
   height: 22px;
+  display: block;
+  transition: transform 0.25s ease, fill 0.25s ease;
 }
 .fullscreen-btn:hover {
-  background: rgba(251, 145, 59, 0.15);
+  fill: #ffae5a;
   transform: scale(1.08);
 }
 
