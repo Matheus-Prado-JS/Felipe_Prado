@@ -282,6 +282,7 @@ function setupCustomControls() {
   });
 const fullscreenBtn = document.querySelector(".fullscreen-btn");
 
+
 fullscreenBtn.addEventListener("click", (e) => {
   e.stopPropagation();
 
