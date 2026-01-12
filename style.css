@@ -1020,7 +1020,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 14px;
+  padding: 8px 12px;
   background: rgba(0, 0, 0, 0.45);
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -1081,6 +1081,32 @@ body {
   color: #fff;
   user-select: none;
 }
+
+.fullscreen-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 8px;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.fullscreen-btn .icon {
+  fill: #fb913b;
+  width: 22px;
+  height: 22px;
+}
+.fullscreen-btn:hover {
+  background: rgba(251, 145, 59, 0.15);
+  transform: scale(1.08);
+}
+
 /* ===============================
    Custom Player Volume Control
 =============================== */
@@ -1096,7 +1122,7 @@ body {
 .volume {
   -webkit-appearance: none;
   appearance: none;
-  width: 100px;
+  width: 90px;
   height: 6px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
