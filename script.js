@@ -184,6 +184,28 @@ let currentIndex = 0;
 let workCards = []; // será atualizado conforme a seção
 let sectionType = ""; // "horizontal" ou "vertical"
 let player; // instância da API do YouTube
+// ===============================
+// Fullscreen – controle de visibilidade dos controles
+// ===============================
+let controlsTimeout = null;
+
+function showControls() {
+  const playerEl = document.querySelector(".custom-player");
+  if (!playerEl) return;
+  if (!playerEl.classList.contains("is-fullscreen")) return;
+
+  playerEl.classList.add("show-controls");
+  playerEl.classList.remove("hide-controls");
+
+  clearTimeout(controlsTimeout);
+
+  controlsTimeout = setTimeout(() => {
+    playerEl.classList.remove("show-controls");
+    playerEl.classList.add("hide-controls");
+  }, 2500);
+  
+}
+
 
 // ===============================
 // Função chamada automaticamente pela API do YouTube
@@ -264,10 +286,6 @@ function extractVideoId(url) {
 }
 
 
-
-
-
-
 // ===============================
 // Liga os controles customizados
 // ===============================
@@ -285,29 +303,53 @@ function setupCustomControls() {
       player.playVideo();
     }
   });
+
+  // FullScreen Mode
 const fullscreenBtn = document.querySelector(".fullscreen-btn");
+
+document.addEventListener("fullscreenchange", () => {
+  const playerEl = document.querySelector(".custom-player");
+  if (!playerEl) return;
+
+  if (document.fullscreenElement) {
+    playerEl.classList.add("is-fullscreen");
+    showControls(); // mostra ao entrar
+  } else {
+    playerEl.classList.remove(
+      "is-fullscreen",
+      "hide-controls",
+      "show-controls"
+    );
+    clearTimeout(controlsTimeout);
+  }
+});
+const interactionLayer = document.querySelector(".interaction-layer");
+
+if (interactionLayer) {
+  interactionLayer.addEventListener("mousemove", showControls);
+  interactionLayer.addEventListener("touchstart", showControls);
+}
 
 
 fullscreenBtn.addEventListener("click", (e) => {
   e.stopPropagation();
 
-  if (!player) return;
-
-  const iframe = player.getIframe();
+  const playerContainer = document.querySelector(".custom-player");
+  if (!playerContainer) return;
 
   if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-    iframe.requestFullscreen?.();
-    iframe.webkitRequestFullscreen?.();
+    playerContainer.requestFullscreen?.();
+    playerContainer.webkitRequestFullscreen?.(); // Safari
   } else {
     document.exitFullscreen?.();
     document.webkitExitFullscreen?.();
   }
 });
 
+
   volumeControl.addEventListener("input", e => {
     player.setVolume(e.target.value);
   });
-
   // Atualiza progresso e tempo
   setInterval(() => {
     if (player && player.getDuration) {
@@ -328,6 +370,15 @@ fullscreenBtn.addEventListener("click", (e) => {
     const newTime = percent * player.getDuration();
     player.seekTo(newTime, true);
   });
+  const playerEl = document.querySelector(".custom-player");
+
+// Se pausar, mantém controles visíveis
+player.addEventListener?.("onStateChange", (event) => {
+  if (event.data === YT.PlayerState.PAUSED) {
+    showControls();
+  }
+});
+
 }
  // Garantir que Progress, Volume, Full não disparem o player por acidente
  document.querySelectorAll(".controls *").forEach(el => {

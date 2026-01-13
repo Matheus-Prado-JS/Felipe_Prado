@@ -721,9 +721,7 @@ body {
 .video-wrapper.vertical {
   grid-column: 2;
 
-  width: auto;
-  max-width: 380px;
-  max-height: calc(100vh - 160px);
+  height: min(85vh, 900px); /* cresce bem em telas grandes */
   aspect-ratio: 9 / 16;
 
   display: flex;
@@ -732,6 +730,7 @@ body {
 
   justify-self: center;
 }
+
 .video-wrapper.vertical iframe {
   width: 100%;
   height: 100%;
@@ -971,6 +970,16 @@ body {
     font-size: 5rem;
   }
 }
+/* ==============================
+   🖥️Telas Largas Video Vertical
+============================== */
+@media (min-aspect-ratio: 21 / 9) and (min-width: 2560px) {
+
+  .video-wrapper.vertical {
+    max-width: 520px;
+  }
+
+}
 /* ==========================
    🖥️ Contato — telas ultra largas
 ========================== */
@@ -1134,6 +1143,34 @@ body {
   fill: #ffae5a;
   transform: scale(1.08);
 }
+/* estado fullscreen */
+.custom-player.is-fullscreen {
+  cursor: none;
+}
+
+/* controles escondidos */
+.custom-player.is-fullscreen.hide-controls .controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* controles visíveis */
+.custom-player.is-fullscreen .controls {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* quando mexer o mouse */
+.custom-player.is-fullscreen.show-controls {
+  cursor: default;
+}
+.interaction-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: transparent;
+}
+
 
 /* ===============================
    Custom Player Volume Control
