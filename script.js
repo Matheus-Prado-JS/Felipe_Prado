@@ -201,10 +201,15 @@ function loadVideo(index) {
   const orientation = card.getAttribute("data-orientation");
   const videoId = extractVideoId(videoUrl);
   if (!videoId) return;
+  const videoContent = document.querySelector(".video-content");
+  videoContent.classList.toggle("vertical", orientation === "vertical");
+
 
   const wrapper = document.querySelector(".video-wrapper");
   wrapper.classList.remove("vertical", "horizontal");
   wrapper.classList.add(orientation);
+  modal.classList.toggle("is-vertical", orientation === "vertical");
+
 
   const customPlayer = wrapper.querySelector(".custom-player");
   customPlayer.innerHTML = `
