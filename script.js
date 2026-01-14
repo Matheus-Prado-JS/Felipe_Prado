@@ -392,12 +392,23 @@ player.addEventListener?.("onStateChange", (event) => {
 // ===============================
 function syncPlayPauseIcon(event) {
   const customPlayer = document.querySelector(".custom-player");
+  const overlay = document.querySelector(".video-overlay");
+
   if (event.data === YT.PlayerState.PLAYING) {
     customPlayer.classList.add("playing");
-  } else {
-    customPlayer.classList.remove("playing");
+    overlay?.classList.add("hidden");
+  }
+
+  if (
+    event.data === YT.PlayerState.PAUSED ||
+    event.data === YT.PlayerState.ENDED
+  ) {
+    overlay?.classList.remove("hidden");
   }
 }
+document.querySelector(".video-overlay")?.addEventListener("click", () => {
+  player.playVideo();
+});
 
 // ===============================
 // Formata tempo (segundos → mm:ss)

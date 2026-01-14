@@ -1170,6 +1170,30 @@ body {
   z-index: 5;
   background: transparent;
 }
+/* ===============================
+   Esconder Sugestões do Youtube
+=============================== */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  cursor: pointer;
+}
+
+.video-overlay.hidden {
+  display: none;
+}
+
+.overlay-play {
+  font-size: 80px;
+  color: white;
+  background: none;
+  border: none;
+}
 
 
 /* ===============================
