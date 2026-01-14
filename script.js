@@ -296,6 +296,10 @@ function setupCustomControls() {
   const timeLabel = document.querySelector(".time");
   const volumeControl = document.querySelector(".volume");
 
+  const overlay = document.querySelector(".video-overlay");
+  const overlayPlayBtn = overlay?.querySelector(".overlay-play");
+
+
   playPauseBtn.addEventListener("click", () => {
     if (player.getPlayerState() === YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -303,6 +307,12 @@ function setupCustomControls() {
       player.playVideo();
     }
   });
+  overlayPlayBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  overlay.classList.add("hidden");
+  player.playVideo();
+});
+
 
   // FullScreen Mode
 const fullscreenBtn = document.querySelector(".fullscreen-btn");
@@ -394,6 +404,8 @@ function syncPlayPauseIcon(event) {
   const customPlayer = document.querySelector(".custom-player");
   const overlay = document.querySelector(".video-overlay");
 
+  if (!customPlayer) return;
+
   if (event.data === YT.PlayerState.PLAYING) {
     customPlayer.classList.add("playing");
     overlay?.classList.add("hidden");
@@ -403,12 +415,11 @@ function syncPlayPauseIcon(event) {
     event.data === YT.PlayerState.PAUSED ||
     event.data === YT.PlayerState.ENDED
   ) {
+    customPlayer.classList.remove("playing");
     overlay?.classList.remove("hidden");
   }
 }
-document.querySelector(".video-overlay")?.addEventListener("click", () => {
-  player.playVideo();
-});
+
 
 // ===============================
 // Formata tempo (segundos → mm:ss)

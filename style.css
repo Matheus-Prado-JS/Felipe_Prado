@@ -1171,16 +1171,16 @@ body {
   background: transparent;
 }
 /* ===============================
-   Esconder Sugestões do Youtube
+   Esconder Sugestões do
 =============================== */
 .video-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 6; /* acima do iframe, abaixo dos controles */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 30;
   cursor: pointer;
 }
 
@@ -1189,13 +1189,18 @@ body {
 }
 
 .overlay-play {
-  font-size: 80px;
-  color: white;
+  font-size: 88px;
+  color: #fb913b;
   background: none;
   border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-
+.overlay-play:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
 /* ===============================
    Custom Player Volume Control
 =============================== */
