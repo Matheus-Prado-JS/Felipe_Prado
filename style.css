@@ -1169,38 +1169,33 @@ body {
   inset: 0;
   z-index: 5;
   background: transparent;
-}
-/* ===============================
-   Esconder Sugestões do
-=============================== */
-.video-overlay {
+}/* ==============================
+   Overlay de Thumbnail (anti-sugestões YouTube)
+============================== */
+
+.thumb-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 6; /* acima do iframe, abaixo dos controles */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  z-index: 20; /* acima do iframe e interaction-layer */
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  background-color: #000;
+
+  opacity: 1;
+  pointer-events: auto;
+
+  transition: opacity 0.3s ease;
 }
 
-.video-overlay.hidden {
-  display: none;
+/* quando escondido */
+.thumb-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.overlay-play {
-  font-size: 88px;
-  color: #fb913b;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.25s ease, opacity 0.25s ease;
-}
-
-.overlay-play:hover {
-  transform: scale(1.1);
-  opacity: 0.9;
-}
 /* ===============================
    Custom Player Volume Control
 =============================== */
@@ -1321,11 +1316,6 @@ body {
 }
 
 
-
-
-
-
-
 /* ==============================
    Tema Claro para Serviços
 ============================== */
@@ -1362,4 +1352,3 @@ body.light-theme .btn {
   border-color: #ffffff;
   color: #ffffff;
 }
-

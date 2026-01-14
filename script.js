@@ -258,6 +258,29 @@ function loadVideo(index) {
 
   customPlayer.classList.add("playing");
 
+  // ===============================
+// Overlay de Thumbnail
+// ===============================
+let thumbOverlay = customPlayer.querySelector(".thumb-overlay");
+
+if (!thumbOverlay) {
+  thumbOverlay = document.createElement("div");
+  thumbOverlay.className = "thumb-overlay";
+  customPlayer.appendChild(thumbOverlay);
+}
+
+// define thumbnail correta
+const isVertical = orientation === "vertical";
+const thumbIndex = index + 1;
+
+const thumbSrc = isVertical
+  ? `img/TV-${thumbIndex}.jpg`
+  : `img/Thumb-${thumbIndex}.jpg`;
+
+thumbOverlay.style.backgroundImage = `url('${thumbSrc}')`;
+thumbOverlay.classList.add("hidden");
+
+
   // Cria o player YouTube via API
   player = new YT.Player("videoFrame", {
     videoId,
@@ -269,9 +292,23 @@ function loadVideo(index) {
       showinfo: 0,
     },
     events: {
-      onReady: setupCustomControls,
-      onStateChange: syncPlayPauseIcon,
-    },
+  onReady: setupCustomControls,
+  onStateChange: (event) => {
+    // mantém o comportamento atual (ícone play/pause)
+    syncPlayPauseIcon(event);
+
+    // SE o vídeo acabar → recomeça imediatamente
+    if (event.data === YT.PlayerState.ENDED) {
+      const customPlayer = document.querySelector(".custom-player");
+      const thumbOverlay = customPlayer?.querySelector(".thumb-overlay");
+      thumbOverlay?.classList.remove("hidden");
+
+      player.seekTo(0);
+      player.playVideo();
+    }
+  },
+},
+
   });
 }
 
@@ -296,10 +333,6 @@ function setupCustomControls() {
   const timeLabel = document.querySelector(".time");
   const volumeControl = document.querySelector(".volume");
 
-  const overlay = document.querySelector(".video-overlay");
-  const overlayPlayBtn = overlay?.querySelector(".overlay-play");
-
-
   playPauseBtn.addEventListener("click", () => {
     if (player.getPlayerState() === YT.PlayerState.PLAYING) {
       player.pauseVideo();
@@ -307,12 +340,6 @@ function setupCustomControls() {
       player.playVideo();
     }
   });
-  overlayPlayBtn?.addEventListener("click", (e) => {
-  e.stopPropagation();
-  overlay.classList.add("hidden");
-  player.playVideo();
-});
-
 
   // FullScreen Mode
 const fullscreenBtn = document.querySelector(".fullscreen-btn");
@@ -402,21 +429,16 @@ player.addEventListener?.("onStateChange", (event) => {
 // ===============================
 function syncPlayPauseIcon(event) {
   const customPlayer = document.querySelector(".custom-player");
-  const overlay = document.querySelector(".video-overlay");
-
-  if (!customPlayer) return;
+  const thumbOverlay = customPlayer.querySelector(".thumb-overlay");
 
   if (event.data === YT.PlayerState.PLAYING) {
     customPlayer.classList.add("playing");
-    overlay?.classList.add("hidden");
-  }
-
-  if (
-    event.data === YT.PlayerState.PAUSED ||
-    event.data === YT.PlayerState.ENDED
-  ) {
+    thumbOverlay?.classList.add("hidden");
+  } 
+  
+  if (event.data === YT.PlayerState.PAUSED) {
     customPlayer.classList.remove("playing");
-    overlay?.classList.remove("hidden");
+    thumbOverlay?.classList.remove("hidden");
   }
 }
 
@@ -513,4 +535,3 @@ nextBtn.addEventListener("click", e => {
   currentIndex = (currentIndex + 1) % workCards.length;
   loadVideo(currentIndex);
 });
-
