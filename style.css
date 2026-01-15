@@ -233,7 +233,7 @@ body {
 }
 
 /* ==============================
-   Trabalhos - Carrossel (thumbs com proporção fixa)
+   Trabalhos - Trabalhos Verticais - Carrossel 
 ============================== */
 
 .trabalhos {
@@ -284,7 +284,6 @@ body {
   overflow-x: hidden;
 }
 
-
 /* thumb */
 .work-card .thumb {
   width: 100%;
@@ -305,7 +304,6 @@ body {
   border-top-right-radius: 14px;
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
-
 
 /* meta */
 .work-card h3 {
@@ -371,10 +369,6 @@ body {
   transform: translateX(148px);
 }
 
-
-/* ==============================
-   Trabalhos Verticais
-============================== */
 .trabalhos-verticais .work-card .thumb {
   aspect-ratio: 9 / 16;
   background: inherit;
@@ -533,7 +527,7 @@ body {
   box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
 }
 .btn-quem-sou-eu {
-  display: inline-flex; /* 🔑 */
+  display: inline-flex; 
   align-items: center;
   justify-content: center;
 }
@@ -559,9 +553,9 @@ body {
 
 .contato-container {
   display: flex;
-  align-items: center;              /* 🔑 mesma altura */
-  justify-content: space-between;   /* 🔑 texto esquerda / botão direita */
-  gap: 60px;                        /* espaçamento grande central */
+  align-items: center;              
+  justify-content: space-between;   
+  gap: 60px;                        
 
   max-width: 2000px;
   margin: 0 auto;
@@ -569,8 +563,6 @@ body {
   padding: 24px 60px;
   border-radius: 12px;
 }
-
-
 
 .titulo-contato {
   font-size: 2rem;
@@ -777,7 +769,269 @@ body {
   transform: translateX(-300px);
 }
 
+/* ==============================
+   Player Customizado
+============================== */
+.custom-player {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+}
 
+.custom-player iframe,
+.custom-player video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+}
+
+.custom-player .controls {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-player:hover .controls {
+  opacity: 1;
+}
+
+.custom-player .play-pause {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+}
+
+.custom-player .icon {
+  fill: #fb913b;
+  width: 26px;
+  height: 26px;
+  display: none;
+}
+
+.custom-player .icon.play {
+  display: block;
+}
+
+.custom-player.playing .icon.play {
+  display: none;
+}
+
+.custom-player.playing .icon.pause {
+  display: block;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.progress {
+  width: 0;
+  height: 100%;
+  background: #fb913b;
+  transition: width 0.1s linear;
+}
+
+.time {
+  font-size: 14px;
+  color: #fff;
+  user-select: none;
+}
+
+.fullscreen-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 8px;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.fullscreen-btn .icon {
+  fill: none;
+  stroke: #fb913b;
+  width: 22px;
+  height: 22px;
+  display: block;
+  transition: transform 0.25s ease, fill 0.25s ease;
+}
+.fullscreen-btn:hover {
+  fill: #ffae5a;
+  transform: scale(1.08);
+}
+/* estado fullscreen */
+.custom-player.is-fullscreen {
+  cursor: none;
+}
+
+/* controles escondidos */
+.custom-player.is-fullscreen.hide-controls .controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* controles visíveis */
+.custom-player.is-fullscreen .controls {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* quando mexer o mouse */
+.custom-player.is-fullscreen.show-controls {
+  cursor: default;
+}
+.interaction-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: transparent;
+}
+
+/* ===============================
+   Custom Player Volume Control
+=============================== */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+.volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 90px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fb913b;
+  box-shadow: 0 0 6px rgba(251, 145, 59, 0.6);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.volume::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #ffae5a;
+}
+
+.volume:hover {
+  background: rgba(251, 145, 59, 0.4);
+}
+
+.time {
+  color: #fb913b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ==============================
+   Hovers Padrões
+============================== */
+.hover-img {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.work-card:hover .hover-img,
+.quem-sou-eu-img:hover .hover-img {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
+}
+
+/* ==============================
+   Hover Card + Imagem (Trabalhos)
+============================== */
+
+.work-card {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.work-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
+}
+
+.trabalhos-verticais .work-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(251, 145, 59, 0.4);
+}
+
+/* ==============================
+   Scrollbar Custom (Chromium / Brave)
+============================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000 transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #fb913b,
+    #fbb03b
+  );
+  border-radius: 999px;
+  border: 2px solid #000 transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ffd18a,
+    #fb913b
+  );
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fb913b transparent;
+}
 
 /* ==============================
    📱 Responsividade (todas as telas)
@@ -1027,297 +1281,7 @@ body {
 }
 
 /* ==============================
-   Player Customizado
-============================== */
-.custom-player {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.custom-player iframe,
-.custom-player video {
-  width: 100%;
-  height: 100%;
-  border: none;
-  border-radius: 12px;
-}
-
-.custom-player .controls {
-  position: absolute;
-  bottom: 10px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.custom-player:hover .controls {
-  opacity: 1;
-}
-
-.custom-player .play-pause {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-}
-
-.custom-player .icon {
-  fill: #fb913b;
-  width: 26px;
-  height: 26px;
-  display: none;
-}
-
-.custom-player .icon.play {
-  display: block;
-}
-
-.custom-player.playing .icon.play {
-  display: none;
-}
-
-.custom-player.playing .icon.pause {
-  display: block;
-}
-
-.progress-bar {
-  flex-grow: 1;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.progress {
-  width: 0;
-  height: 100%;
-  background: #fb913b;
-  transition: width 0.1s linear;
-}
-
-.time {
-  font-size: 14px;
-  color: #fff;
-  user-select: none;
-}
-
-.fullscreen-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 34px;
-  height: 34px;
-
-  border-radius: 8px;
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-.fullscreen-btn .icon {
-  fill: none;
-  stroke: #fb913b;
-  width: 22px;
-  height: 22px;
-  display: block;
-  transition: transform 0.25s ease, fill 0.25s ease;
-}
-.fullscreen-btn:hover {
-  fill: #ffae5a;
-  transform: scale(1.08);
-}
-/* estado fullscreen */
-.custom-player.is-fullscreen {
-  cursor: none;
-}
-
-/* controles escondidos */
-.custom-player.is-fullscreen.hide-controls .controls {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* controles visíveis */
-.custom-player.is-fullscreen .controls {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-/* quando mexer o mouse */
-.custom-player.is-fullscreen.show-controls {
-  cursor: default;
-}
-.interaction-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  background: transparent;
-}/* ==============================
-   Overlay de Thumbnail (anti-sugestões YouTube)
-============================== */
-
-.thumb-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 20; /* acima do iframe e interaction-layer */
-  
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  background-color: #000;
-
-  opacity: 1;
-  pointer-events: auto;
-
-  transition: opacity 0.3s ease;
-}
-
-/* quando escondido */
-.thumb-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ===============================
-   Custom Player Volume Control
-=============================== */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 10px 14px;
-  border-radius: 10px;
-}
-
-.volume {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 90px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.volume::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #fb913b;
-  box-shadow: 0 0 6px rgba(251, 145, 59, 0.6);
-  transition: background 0.3s, transform 0.2s;
-}
-
-.volume::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  background: #ffae5a;
-}
-
-.volume:hover {
-  background: rgba(251, 145, 59, 0.4);
-}
-
-.time {
-  color: #fb913b;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-/* ==============================
-   Hovers Padrões
-============================== */
-.hover-img {
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  position: relative;
-  z-index: 2;
-}
-
-.work-card:hover .hover-img,
-.quem-sou-eu-img:hover .hover-img {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
-}
-
-/* ==============================
-   Hover Card + Imagem (Trabalhos)
-============================== */
-
-.work-card {
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-  will-change: transform;
-}
-
-.work-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
-}
-
-.trabalhos-verticais .work-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 20px rgba(251, 145, 59, 0.4);
-}
-
-/* ==============================
-   Scrollbar Custom (Chromium / Brave)
-============================== */
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #000 transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #fb913b,
-    #fbb03b
-  );
-  border-radius: 999px;
-  border: 2px solid #000 transparent;
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    #ffd18a,
-    #fb913b
-  );
-}
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #fb913b transparent;
-}
-
-
-/* ==============================
-   Tema Claro para Serviços
+   Tema Claro para Trabalhos Verticais e Serviços
 ============================== */
 body.light-theme {
   background: #0c0b0b;

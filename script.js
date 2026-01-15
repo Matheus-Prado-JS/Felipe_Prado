@@ -258,7 +258,7 @@ function loadVideo(index) {
 
   customPlayer.classList.add("playing");
 
-  // ===============================
+// ===============================
 // Overlay de Thumbnail
 // ===============================
 let thumbOverlay = customPlayer.querySelector(".thumb-overlay");
