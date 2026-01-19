@@ -648,9 +648,6 @@ body {
   transform: translateX(0);
 }
 
-
-
-
 /* ==========================
    Modal e Vídeos
 ========================== */
@@ -670,35 +667,42 @@ body {
   position: relative;
   width: 90%;
   max-width: 1100px;
-  aspect-ratio: 16 / 9;
 
   display: grid;
   grid-template-columns: 70px 1fr 70px;
-  align-items: center;
+  grid-template-rows: auto auto;
+  row-gap: 16px;
 
-  overflow: visible;
+  align-items: start;
 }
+
 
 .close-btn {
   position: absolute;
-  top: -40px;
-  right: -15px;
-  font-size: 40px;
+  top: -16px;
+  right: 0;
+
+  font-size: 38px;
   color: #fff;
   cursor: pointer;
-  transition: color 0.3s ease;
+  z-index: 60;
 }
+
 .close-btn:hover {
   color: #fb913b;
 }
 
 /* horizontais */
 .video-wrapper.horizontal {
-  position: relative;
-  width: 100%;
-  height: 100%;
   grid-column: 2;
+
+  width: 100%;
+  max-width: 850px;
+  aspect-ratio: 16 / 9;
+
+  margin: 0 auto;
 }
+
 .video-wrapper.horizontal iframe {
   position: relative;
   top: 0;
@@ -713,14 +717,19 @@ body {
 .video-wrapper.vertical {
   grid-column: 2;
 
-  height: min(85vh, 900px); /* cresce bem em telas grandes */
+  width: 100%;
+  max-width: 320px; /* 🔑 controle visual */
   aspect-ratio: 9 / 16;
+
+  margin: 0 auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  justify-self: center;
+}
+/* Respiro vertical para vídeo vertical */
+.video-modal.is-vertical .video-wrapper.vertical {
+  margin-top: 28px;
 }
 
 .video-wrapper.vertical iframe {
@@ -732,9 +741,9 @@ body {
 
 /* setas */
 .nav-arrow {
-  position: relative;
-  top: auto;
-  transform: none;
+  position: absolute; /* 🔑 aqui está a correção */
+  top: 50%;
+  transform: translateY(-50%);
 
   font-size: 60px;
   color: #fff;
@@ -749,16 +758,21 @@ body {
   z-index: 50;
 }
 
+
 .nav-arrow:hover {
   color: #fb913b;
   transform: translateX(var(--tx, 0)) scale(1.1);
 }
 
 /* padrão */
-.nav-arrow.left,
-.nav-arrow.right {
-  transform: translateX(0);
+.nav-arrow.left {
+  left: 0;
 }
+
+.nav-arrow.right {
+  right: 0;
+}
+
 
 /* APENAS vídeo vertical */
 .video-modal.is-vertical .nav-arrow.left {
@@ -768,6 +782,12 @@ body {
 .video-modal.is-vertical .nav-arrow.right {
   transform: translateX(-300px);
 }
+.video-modal.is-vertical .close-btn {
+  top: 10px;
+  right: 30%;
+  transform: translateX(50%);
+}
+
 
 /* ==============================
    Player Customizado
@@ -962,6 +982,96 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
 }
+
+/* ==========================
+   Descrição dos Vídeos Abertos
+========================== */
+.video-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 1fr 70px;
+  align-items: center;
+}
+.video-info-card {
+  grid-column: 2;
+
+  margin-top: 2px;
+  padding: 10px 14px;
+
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(6px);
+
+  border-radius: 14px;
+  border: 1px solid rgb(15, 15, 15);
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  max-width: 850px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.video-info-card .video-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--accent);
+}
+
+.video-info-card .video-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--accent);
+}
+
+/* ==============================
+   Card de Descrição — Vídeo Vertical
+============================== */
+.video-modal.is-vertical .video-stage {
+  row-gap: 20px;
+}
+
+.video-modal.is-vertical .video-info-card {
+  max-width: 320px;
+  margin: 6px auto 0;
+  margin-top: -9px;
+
+  padding: 10px 16px;
+
+  gap: 4px; /* 🔑 textos mais próximos */
+  background: rgba(255, 255, 255, 0.06);
+}
+.video-modal.is-vertical .video-info-card .video-title {
+  font-size: 1rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.video-modal.is-vertical .video-info-card .video-description {
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+/* ==============================
+   Card de Descrição — Mobile
+============================== */
+@media (max-width: 768px) {
+  .video-info-card {
+    padding: 16px 18px;
+    margin-top: 16px;
+  }
+
+  .video-info-card .video-title {
+    font-size: 1.05rem;
+  }
+
+  .video-info-card .video-description {
+    font-size: 0.9rem;
+  }
+}
+
 
 /* ==============================
    Hovers Padrões

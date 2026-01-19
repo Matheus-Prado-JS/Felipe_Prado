@@ -179,6 +179,11 @@ const frame = document.getElementById("videoFrame");
 const wrapper = document.querySelector(".video-wrapper");
 const prevBtn = document.querySelector(".nav-arrow.left");
 const nextBtn = document.querySelector(".nav-arrow.right");
+// ===============================
+// Elementos do card de informações do vídeo
+// ===============================
+const videoTitleEl = document.querySelector(".video-title");
+const videoDescriptionEl = document.querySelector(".video-description");
 
 let currentIndex = 0;
 let workCards = []; // será atualizado conforme a seção
@@ -206,6 +211,18 @@ function showControls() {
   
 }
 
+// ===============================
+// Atualiza informações do vídeo (título e descrição)
+// ===============================
+function updateVideoInfo(card) {
+  if (!card) return;
+
+  const title = card.getAttribute("data-title");
+  const description = card.getAttribute("data-description");
+
+  videoTitleEl.textContent = title || "";
+  videoDescriptionEl.textContent = description || "";
+}
 
 // ===============================
 // Função chamada automaticamente pela API do YouTube
@@ -218,6 +235,8 @@ function onYouTubeIframeAPIReady() {}
 function loadVideo(index) {
   const card = workCards[index];
   if (!card) return;
+
+  updateVideoInfo(card);
 
   const videoUrl = card.getAttribute("data-video");
   const orientation = card.getAttribute("data-orientation");
@@ -258,29 +277,6 @@ function loadVideo(index) {
 
   customPlayer.classList.add("playing");
 
-// ===============================
-// Overlay de Thumbnail
-// ===============================
-let thumbOverlay = customPlayer.querySelector(".thumb-overlay");
-
-if (!thumbOverlay) {
-  thumbOverlay = document.createElement("div");
-  thumbOverlay.className = "thumb-overlay";
-  customPlayer.appendChild(thumbOverlay);
-}
-
-// define thumbnail correta
-const isVertical = orientation === "vertical";
-const thumbIndex = index + 1;
-
-const thumbSrc = isVertical
-  ? `img/TV-${thumbIndex}.jpg`
-  : `img/Thumb-${thumbIndex}.jpg`;
-
-thumbOverlay.style.backgroundImage = `url('${thumbSrc}')`;
-thumbOverlay.classList.add("hidden");
-
-
   // Cria o player YouTube via API
   player = new YT.Player("videoFrame", {
     videoId,
@@ -299,9 +295,6 @@ thumbOverlay.classList.add("hidden");
 
     // SE o vídeo acabar → recomeça imediatamente
     if (event.data === YT.PlayerState.ENDED) {
-      const customPlayer = document.querySelector(".custom-player");
-      const thumbOverlay = customPlayer?.querySelector(".thumb-overlay");
-      thumbOverlay?.classList.remove("hidden");
 
       player.seekTo(0);
       player.playVideo();
@@ -429,16 +422,13 @@ player.addEventListener?.("onStateChange", (event) => {
 // ===============================
 function syncPlayPauseIcon(event) {
   const customPlayer = document.querySelector(".custom-player");
-  const thumbOverlay = customPlayer.querySelector(".thumb-overlay");
 
   if (event.data === YT.PlayerState.PLAYING) {
     customPlayer.classList.add("playing");
-    thumbOverlay?.classList.add("hidden");
   } 
   
   if (event.data === YT.PlayerState.PAUSED) {
     customPlayer.classList.remove("playing");
-    thumbOverlay?.classList.remove("hidden");
   }
 }
 
