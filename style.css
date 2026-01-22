@@ -822,6 +822,7 @@ body {
   background: #000;
   border-radius: 12px;
   overflow: hidden;
+  z-index: 1;
 }
 
 .custom-player iframe,
@@ -953,7 +954,8 @@ body {
 .interaction-layer {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  z-index: 2;
+  pointer-events: auto;
   background: transparent;
 }
 
@@ -1005,6 +1007,49 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
 }
+/* ==========================
+   Overlay de Pause
+========================== */
+.pause-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  padding: 24px;
+
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(2px);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.3s ease;
+}
+
+.pause-overlay-btn {
+  background: #fb913b;
+  color: #000;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Bloqueia UI interna do YouTube */
+.video-wrapper iframe {
+  pointer-events: none;
+}
+
+/* Libera quando está tocando */
+.custom-player.playing iframe {
+  pointer-events: auto;
+}
+
 
 /* ==========================
    Descrição dos Vídeos Abertos
