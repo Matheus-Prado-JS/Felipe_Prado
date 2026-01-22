@@ -548,21 +548,24 @@ body {
 ========================== */
 .contato {
   background: #000;
-  padding: 10px 180px 40px;
+  padding: 10px 10px 40px;
 }
+
 
 .contato-container {
   display: flex;
-  align-items: center;              
-  justify-content: space-between;   
-  gap: 60px;                        
+  align-items: center;
+  justify-content: space-between;
+  gap: 200px;
+  
 
   max-width: 2000px;
   margin: 0 auto;
   background: #000;
-  padding: 24px 60px;
+  padding: 24px 40px;
   border-radius: 12px;
 }
+
 
 .titulo-contato {
   font-size: 2rem;
@@ -600,6 +603,15 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
 }
+/* ==========================
+   Contato — Ação (Título + Botão)
+========================== */
+.contato-acao {
+  display: flex;
+  flex-direction: column;   /* 🔑 texto em cima do botão */
+  align-items: flex-end;    /* 🔑 alinhado à direita */
+  gap: 18px;                /* 🔧 ajuste do espaço entre texto e botão */
+}
 
 
 /* ==========================
@@ -609,9 +621,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  margin-top: 32px;
   font-size: 0.95rem;
-  padding-left: 50px;
 }
 
 .contato-info span {
@@ -1280,11 +1290,17 @@ body {
     text-align: center;
   }
 
-  .contato-container {
-    flex-direction: column;
-    text-align: center;
-    padding: 30px 20px;
+  @media (min-width: 769px) and (max-width: 1200px) {
+
+  .contato {
+    padding: 10px 40px 40px; /* 🔧 CONTROLE REAL */
   }
+
+  .contato-container {
+    padding: 24px 30px;     /* 🔧 AQUI */
+  }
+}
+
 
   .btn-contato {
     margin-top: 20px;
@@ -1311,10 +1327,30 @@ body {
    🖥️ Telas Ultra Largas (21:9 ou +2000px)
 ============================== */
 @media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+
+  .video-wrapper.horizontal {
+    max-width: 1300px;
+  }
+
+  .video-info-card {
+    max-width: 1300px;
+    padding: 16px 22px;
+    gap: 6px;
+  }
+
+  .video-info-card .video-title {
+    font-size: 1.4rem;
+  }
+
+  .video-info-card .video-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
   .container {
     max-width: 2000px;
     margin: 0 auto;
     padding: 0 100px;
+    
   }
 
   .trabalhos {
@@ -1328,6 +1364,7 @@ body {
   .work-card {
     min-width: 380px;
     max-width: 380px;
+    overflow: hidden;
   }
 
   .video-content {
@@ -1339,30 +1376,88 @@ body {
     gap: 60px;
   }
 
-  .quem-sou-eu-conteudo {
-    max-width: 1600px;
-  }
-
   .titulo-contato {
     font-size: 5rem;
   }
 }
-/* ==============================
-   🖥️Telas Largas Video Vertical
-============================== */
-@media (min-aspect-ratio: 21 / 9) and (min-width: 2560px) {
+/* ======================
+     Vídeos Verticais
+  ====================== */
 
-  .video-wrapper.vertical {
-    max-width: 520px;
+  .video-modal.is-vertical .video-wrapper.vertical {
+    max-width: 560px;
+  }
+
+  .video-modal.is-vertical .video-info-card {
+    max-width: 560px;
+    padding: 14px 20px;
+  }
+
+  .video-modal.is-vertical .video-info-card .video-title {
+    font-size: 1.15rem;
+  }
+
+  .video-modal.is-vertical .video-info-card .video-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+/* ==============================
+   🖥️ Telas Ultra Largas — Close Button Vídeo Vertical
+============================== */
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+
+  .video-modal.is-vertical .close-btn {
+    top: 20px;
+    right: 42%;
+    transform: translateX(240px);
   }
 
 }
+/* ==============================
+   🖥️ Quem Sou Eu — Telas Ultra Largas
+============================== */
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+
+  .quem-sou-eu {
+    padding: 140px 0; /* mais presença vertical */
+  }
+
+  .quem-sou-eu-conteudo {
+    max-width: 1400px;  /* 🔑 AQUI é o coração do ajuste */
+    gap: 120px;         /* espaço entre imagem e texto */
+  }
+
+  .quem-sou-eu-img img {
+    max-width: 520px;   /* imagem mais forte */
+  }
+
+  .quem-sou-eu h2 {
+    font-size: 3.2rem;
+  }
+
+  .quem-sou-eu p {
+    font-size: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .btn-quem-sou-eu {
+    font-size: 1.1rem;
+    padding: 14px 34px;
+  }
+}
+
 /* ==========================
    🖥️ Contato — telas ultra largas
 ========================== */
 @media (min-width: 1400px) {
+
+  .contato-acao {
+    align-items: flex-end;
+    gap: 24px;
+  }
+
   .titulo-contato {
-    font-size: 2.3rem;     /* cresce, mas com controle */
+    font-size: 2.3rem;
   }
 
   .btn-contato {
@@ -1371,13 +1466,25 @@ body {
   }
 
   .contato-container {
-    padding: 32px 100px;   /* mais respiro lateral */
+    justify-content: center;  /* 🔑 CENTRALIZA O CONJUNTO */
+    gap: 820px;               /* 🔧 controla distância entre info e ação */
+    padding-left: 0;
+    padding-right: 0;
   }
 }
+
+
 /* ==============================
    Carrossel Trabalhos — telas ultra largas
 ============================== */
 @media (min-width: 2400px) {
+  .carousel {
+    overflow: hidden;
+  }
+  .carousel-track {
+    gap: 32px;
+    padding-right: 40px;
+  }
 
   /* Trabalhos horizontais */
   .trabalhos .carousel-controls .prev {
