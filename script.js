@@ -254,13 +254,7 @@ function loadVideo(index) {
 
   const customPlayer = wrapper.querySelector(".custom-player");
   customPlayer.innerHTML = `
-  <div class="interaction-layer"></div>
     <div id="videoFrame"></div>
-
-     <div class="pause-overlay">
-    <button class="pause-overlay-btn">▶ Continuar</button>
-  </div>
-
     <div class="controls">
       <button class="play-pause">
         <svg viewBox="0 0 24 24" class="icon play"><path d="M8 5v14l11-7z"/></svg>
@@ -280,17 +274,7 @@ function loadVideo(index) {
     </button>
     </div>
   `;
-const pauseOverlay = customPlayer.querySelector(".pause-overlay");
 
-function showPauseOverlay() {
-  pauseOverlay.style.opacity = "1";
-  pauseOverlay.style.pointerEvents = "auto";
-}
-
-function hidePauseOverlay() {
-  pauseOverlay.style.opacity = "0";
-  pauseOverlay.style.pointerEvents = "none";
-}
   customPlayer.classList.add("playing");
 
   // Cria o player YouTube via API
@@ -305,31 +289,17 @@ function hidePauseOverlay() {
     },
     events: {
   onReady: setupCustomControls,
- onStateChange: (event) => {
-  syncPlayPauseIcon(event);
+  onStateChange: (event) => {
+    // mantém o comportamento atual (ícone play/pause)
+    syncPlayPauseIcon(event);
 
-  // 🔑 Estados onde o overlay NÃO deve aparecer
-  if (
-    event.data === YT.PlayerState.PLAYING ||
-    event.data === YT.PlayerState.BUFFERING ||
-    event.data === YT.PlayerState.UNSTARTED
-  ) {
-    hidePauseOverlay();
-  }
+    // SE o vídeo acabar → recomeça imediatamente
+    if (event.data === YT.PlayerState.ENDED) {
 
-  // 🔑 Estado onde o overlay DEVE aparecer
-  if (event.data === YT.PlayerState.PAUSED) {
-    showPauseOverlay();
-  }
-
-  // Loop infinito
-  if (event.data === YT.PlayerState.ENDED) {
-    hidePauseOverlay();
-    player.seekTo(0);
-    player.playVideo();
-  }
-}
-,
+      player.seekTo(0);
+      player.playVideo();
+    }
+  },
 },
 
   });
@@ -431,15 +401,47 @@ fullscreenBtn.addEventListener("click", (e) => {
     player.seekTo(newTime, true);
   });
   const playerEl = document.querySelector(".custom-player");
-const pauseBtn = document.querySelector(".pause-overlay-btn");
 
-if (pauseBtn) {
-  pauseBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    player.playVideo();
-  });
+// Se pausar, mantém controles visíveis
+player.addEventListener?.("onStateChange", (event) => {
+  if (event.data === YT.PlayerState.PAUSED) {
+    showControls();
+  }
+});
+
 }
+ // Garantir que Progress, Volume, Full não disparem o player por acidente
+ document.querySelectorAll(".controls *").forEach(el => {
+  el.addEventListener("click", e => {
+    e.stopPropagation();
+  });
+});
+
 // ===============================
+// Atualiza ícone play/pause
+// ===============================
+function syncPlayPauseIcon(event) {
+  const customPlayer = document.querySelector(".custom-player");
+
+  if (event.data === YT.PlayerState.PLAYING) {
+    customPlayer.classList.add("playing");
+  } 
+  
+  if (event.data === YT.PlayerState.PAUSED) {
+    customPlayer.classList.remove("playing");
+  }
+}
+
+
+// ===============================
+// Formata tempo (segundos → mm:ss)
+// ===============================
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60).toString().padStart(2, "0");
+  return `${m}:${s}`;
+}
+  // ===============================
   // Pausar / despausar clicando no vídeo
   // ===============================
   const customPlayer = document.querySelector(".custom-player");
@@ -470,39 +472,7 @@ if (pauseBtn) {
   togglePlay();
 }, { passive: true });
 
-}
- // Garantir que Progress, Volume, Full não disparem o player por acidente
- document.querySelectorAll(".controls *").forEach(el => {
-  el.addEventListener("click", e => {
-    e.stopPropagation();
-  });
-});
 
-// ===============================
-// Atualiza ícone play/pause
-// ===============================
-function syncPlayPauseIcon(event) {
-  const customPlayer = document.querySelector(".custom-player");
-
-  if (event.data === YT.PlayerState.PLAYING) {
-    customPlayer.classList.add("playing");
-  } 
-  
-  if (event.data === YT.PlayerState.PAUSED) {
-    customPlayer.classList.remove("playing");
-  }
-  
-}
-
-
-// ===============================
-// Formata tempo (segundos → mm:ss)
-// ===============================
-function formatTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60).toString().padStart(2, "0");
-  return `${m}:${s}`;
-}
 
 // ===============================
 // Abrir modal

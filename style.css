@@ -1,6 +1,7 @@
 /* ==============================
-   Variáveis & Reset
+   🌱 Base Global, Reset & Variáveis
 ============================== */
+
 :root {
   --accent: #fbb03b;
   --bg: #050505;
@@ -32,8 +33,9 @@ body {
 
 
 /* ==============================
-   Header
+   🧭 Estrutura Global (Header & Navegação)
 ============================== */
+
 .site-header {
   position: fixed;
   left: 0;
@@ -99,10 +101,10 @@ body {
   width: 100%;
 }
 
-
 /* ==============================
-   Hero Section
+   🎬 Hero Section
 ============================== */
+
 .hero {
   position: relative;
   min-height: 100vh;
@@ -196,44 +198,8 @@ body {
   padding: 5px;
 }
 
-
 /* ==============================
-   Responsividade
-============================== */
-@media (max-width: 1000px) {
-  .wordmark {
-    font-size: 72px;
-  }
-
-  .hero-desc {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 560px) {
-  .logo {
-    height: 34px;
-  }
-
-  .wordmark {
-    font-size: 36px;
-  }
-
-  .container {
-    padding: 0 18px;
-  }
-
-  .hero {
-    min-height: 60vh;
-  }
-
-  .top-nav {
-    gap: 12px;
-  }
-}
-
-/* ==============================
-   Trabalhos - Trabalhos Verticais - Carrossel 
+   🧩 Trabalhos — Base
 ============================== */
 
 .trabalhos {
@@ -380,8 +346,9 @@ body {
 }
 
 /* ==============================
-   Serviços
+   🛠️ Serviços
 ============================== */
+
 .servicos {
   background: inherit;
   color: inherit;
@@ -455,8 +422,9 @@ body {
 }
 
 /* ==============================
-   Quem Sou Eu
+   👤 Quem Sou Eu
 ============================== */
+
 .quem-sou-eu {
   background: #000;
   color: #fff;
@@ -543,29 +511,27 @@ body {
   transition: all 0.8s ease;
 }
 
-/* ==========================
-   Contato
-========================== */
+/* ==============================
+   📞 Contato — Layout
+============================== */
+
 .contato {
   background: #000;
-  padding: 10px 10px 40px;
+  padding: 10px 180px 40px;
 }
-
 
 .contato-container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 200px;
-  
+  align-items: center;              
+  justify-content: space-between;   
+  gap: 60px;                        
 
   max-width: 2000px;
   margin: 0 auto;
   background: #000;
-  padding: 24px 40px;
+  padding: 24px 60px;
   border-radius: 12px;
 }
-
 
 .titulo-contato {
   font-size: 2rem;
@@ -603,25 +569,18 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
 }
-/* ==========================
-   Contato — Ação (Título + Botão)
-========================== */
-.contato-acao {
-  display: flex;
-  flex-direction: column;   /* 🔑 texto em cima do botão */
-  align-items: flex-end;    /* 🔑 alinhado à direita */
-  gap: 18px;                /* 🔧 ajuste do espaço entre texto e botão */
-}
 
+/* ==============================
+   ✨ Contato — Interações & Hovers
+============================== */
 
-/* ==========================
-   Contato Info - hover individual e animado
-========================== */
 .contato-info {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  margin-top: 32px;
   font-size: 0.95rem;
+  padding-left: 50px;
 }
 
 .contato-info span {
@@ -658,9 +617,10 @@ body {
   transform: translateX(0);
 }
 
-/* ==========================
-   Modal e Vídeos
-========================== */
+/* ==============================
+   🎥 Modal de Vídeo — Estrutura Base
+============================== */
+
 .video-modal {
   display: none;
   position: fixed;
@@ -701,6 +661,10 @@ body {
 .close-btn:hover {
   color: #fb913b;
 }
+
+/* ==============================
+   🎞️ Vídeos — Base (Horizontal & Vertical)
+============================== */
 
 /* horizontais */
 .video-wrapper.horizontal {
@@ -748,6 +712,9 @@ body {
   border-radius: 12px;
 }
 
+/* ==============================
+   ⬅️➡️ Navegação de Vídeo (Setas)
+============================== */
 
 /* setas */
 .nav-arrow {
@@ -768,7 +735,6 @@ body {
   z-index: 50;
 }
 
-
 .nav-arrow:hover {
   color: #fb913b;
   transform: translateY(-50%) translateX(var(--tx, 0)) scale(1.1);
@@ -782,7 +748,6 @@ body {
 .nav-arrow.right {
   right: 0;
 }
-
 
 /* APENAS vídeo vertical */
 .video-modal.is-vertical .nav-arrow.left {
@@ -804,6 +769,20 @@ body {
   color: #fb913b;
   transform: translateX(-300px) scale(1.1);
 }
+/* ==============================
+   ▶️ ULTRAWIDE - Setas Verticais
+============================== */
+@media (min-width: 2400px) {
+
+  .video-modal.is-vertical .nav-arrow.left {
+    transform: translateX(240px);
+  }
+
+  .video-modal.is-vertical .nav-arrow.right {
+    transform: translateX(-240px);
+  }
+
+}
 
 .video-modal.is-vertical .close-btn {
   top: 10px;
@@ -811,10 +790,10 @@ body {
   transform: translateX(50%);
 }
 
-
 /* ==============================
-   Player Customizado
+   ▶️ Player Customizado
 ============================== */
+
 .custom-player {
   position: relative;
   width: 100%;
@@ -822,7 +801,6 @@ body {
   background: #000;
   border-radius: 12px;
   overflow: hidden;
-  z-index: 1;
 }
 
 .custom-player iframe,
@@ -954,14 +932,14 @@ body {
 .interaction-layer {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  pointer-events: auto;
+  z-index: 5;
   background: transparent;
 }
 
-/* ===============================
-   Custom Player Volume Control
-=============================== */
+/* ==============================
+   🔊 Player — Controles & Volume
+============================== */
+
 .controls {
   display: flex;
   align-items: center;
@@ -1007,53 +985,11 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
 }
-/* ==========================
-   Overlay de Pause
-========================== */
-.pause-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
 
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+/* ==============================
+   📝 Card de Descrição — Base
+============================== */
 
-  padding: 24px;
-
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(2px);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity 0.3s ease;
-}
-
-.pause-overlay-btn {
-  background: #fb913b;
-  color: #000;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Bloqueia UI interna do YouTube */
-.video-wrapper iframe {
-  pointer-events: none;
-}
-
-/* Libera quando está tocando */
-.custom-player.playing iframe {
-  pointer-events: auto;
-}
-
-
-/* ==========================
-   Descrição dos Vídeos Abertos
-========================== */
 .video-stage {
   position: relative;
   display: grid;
@@ -1095,8 +1031,9 @@ body {
 }
 
 /* ==============================
-   Card de Descrição — Vídeo Vertical
+   📝 Card de Descrição — Vídeo Vertical
 ============================== */
+
 .video-modal.is-vertical .video-stage {
   row-gap: 20px;
 }
@@ -1123,14 +1060,24 @@ body {
 }
 
 /* ==============================
-   Card de Descrição — Mobile
+   📝 Card de Descrição — Mobile
 ============================== */
+
 @media (max-width: 768px) {
   .video-info-card {
     padding: 16px 18px;
     margin-top: 16px;
   }
-
+  .section-title {
+    font-size: 28px;
+    margin-bottom: 28px;
+  }
+  .quem-sou-eu-img img {
+    max-width: 90%;
+  }
+  .btn-contato {
+    margin-top: 20px;
+  }
   .video-info-card .video-title {
     font-size: 1.05rem;
   }
@@ -1140,10 +1087,55 @@ body {
   }
 }
 
+/* ==============================
+   🖥️ Info-card — Horizontal ULTRAWIDE
+============================== */
+
+@media (min-aspect-ratio: 21/9), (min-width: 2560px) {
+
+  .video-modal:not(.is-vertical) .video-info-card {
+    max-width: 1100px; /* 🔑 acompanha o vídeo */
+    padding: 7px 22px;
+    gap: 6px;
+  }
+
+  .video-modal:not(.is-vertical) .video-info-card .video-title {
+    font-size: 1.25rem;
+  }
+
+  .video-modal:not(.is-vertical) .video-info-card .video-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+}
 
 /* ==============================
-   Hovers Padrões
+   🖥️ Info-card — Vertical ULTRAWIDE
 ============================== */
+
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+
+  .video-modal.is-vertical .video-info-card {
+    max-width: 560px;   /* 🔑 AQUI você regula */
+    padding: 12px 20px;
+    gap: 6px;
+  }
+
+  .video-modal.is-vertical .video-info-card .video-title {
+    font-size: 1.1rem;
+  }
+
+  .video-modal.is-vertical .video-info-card .video-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+/* ==============================
+   ✨ Hovers & Micro-interações
+============================== */
+
 .hover-img {
   transition: transform 0.5s ease, box-shadow 0.5s ease;
   position: relative;
@@ -1155,11 +1147,6 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
 }
-
-/* ==============================
-   Hover Card + Imagem (Trabalhos)
-============================== */
-
 .work-card {
   transition: transform 0.5s ease, box-shadow 0.5s ease;
   will-change: transform;
@@ -1176,43 +1163,43 @@ body {
 }
 
 /* ==============================
-   Scrollbar Custom (Chromium / Brave)
+   📱 Header & Hero — Mobile / Tablet
 ============================== */
 
-::-webkit-scrollbar {
-  width: 8px;
+@media (max-width: 1000px) {
+  .wordmark {
+    font-size: 72px;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #000 transparent;
-}
+@media (max-width: 560px) {
+  .logo {
+    height: 34px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #fb913b,
-    #fbb03b
-  );
-  border-radius: 999px;
-  border: 2px solid #000 transparent;
-  background-clip: padding-box;
-}
+  .wordmark {
+    font-size: 36px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    #ffd18a,
-    #fb913b
-  );
-}
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #fb913b transparent;
+  .container {
+    padding: 0 18px;
+  }
+
+  .hero {
+    min-height: 60vh;
+  }
+
+  .top-nav {
+    gap: 12px;
+  }
 }
 
 /* ==============================
-   📱 Responsividade (todas as telas)
+   📱 Trabalhos & Carrossel — Responsivo
 ============================== */
 
 @media (max-width: 1024px) and (min-width: 769px) {
@@ -1226,27 +1213,26 @@ body {
   .trabalhos-verticais .work-card { min-width: 200px; max-width: 200px; }
 }
 
+@media (max-width: 600px) {
+  .carousel-track { gap: 14px; }
+  .work-card { min-width: 230px; max-width: 230px; }
+  .trabalhos-verticais .work-card { min-width: 160px; max-width: 160px; }
+}
+
+/* ==============================
+   📱 Serviços — Responsivo
+============================== */
+
 @media (max-width: 900px) {
   .servicos-grid { grid-template-columns: 1fr; gap: 40px; }
   .servicos .section-title { font-size: 32px; }
 }
 
+/* ==============================
+   📱 Modal & Vídeos — Mobile
+============================== */
+
 @media (max-width: 768px) {
-  /* ======== LAYOUT GERAL ======== */
-  .work-card {
-    min-width: 80%;
-    max-width: 80%;
-  }
-
-  .trabalhos {
-    padding: 40px 0;
-  }
-
-  .section-title {
-    font-size: 28px;
-    margin-bottom: 28px;
-  }
-
   .video-content {
     width: 100%;
     max-width: 100%;
@@ -1255,8 +1241,6 @@ body {
     align-items: center;
     gap: 16px;
   }
-
-  /* ======== AJUSTE DOS VÍDEOS ======== */
   .video-wrapper.horizontal iframe {
     width: 100%;
     height: 210px; /* 🔹 altura fixa garante exibição no mobile */
@@ -1271,16 +1255,6 @@ body {
     justify-content: center;
     align-items: center;
   }
-
-  .video-wrapper.vertical iframe {
-    width: 90%;
-    height: 80vh;
-    object-fit: contain;
-    display: block;
-    border-radius: 12px;
-  }
-
-  /* ======== SETAS ABAIXO DO VÍDEO ======== */
   .video-nav-mobile {
     display: flex;
     justify-content: center;
@@ -1288,119 +1262,48 @@ body {
     gap: 40px;
     margin-top: 20px; /* 🔹 espaço entre vídeo e setas */
   }
-
-  .nav-arrow {
-    position: relative;
-    font-size: 40px;
-    color: #fff;
-    opacity: 0.9;
-    cursor: pointer;
-    transition: transform 0.25s ease, opacity 0.25s ease;
-  }
-
-  .nav-arrow:hover {
-    transform: scale(1.15);
-    opacity: 1;
-  }
-
   /* 🔸 Esconde o layout lateral antigo */
   .video-content .nav-arrow.left,
   .video-content .nav-arrow.right {
     display: none !important;
   }
-
-  /* ======== OUTRAS SEÇÕES ======== */
-  .servicos,
+}
+/* ==============================
+   📱 Seções Gerais — Mobile Layout
+============================== */
+.servicos,
   .quem-sou-eu,
   .contato {
     padding: 60px 20px;
   }
-
-  .servicos-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
   .quem-sou-eu-conteudo {
     flex-direction: column;
     text-align: center;
   }
-
-  .quem-sou-eu-img img {
-    max-width: 90%;
-  }
-
-  .titulo-contato {
-    font-size: 2.5rem;
-    text-align: center;
-  }
-
-  @media (min-width: 769px) and (max-width: 1200px) {
-
-  .contato {
-    padding: 10px 40px 40px; /* 🔧 CONTROLE REAL */
-  }
-
   .contato-container {
-    padding: 24px 30px;     /* 🔧 AQUI */
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
   }
-}
 
-
-  .btn-contato {
-    margin-top: 20px;
-  }
-}
-
-
-
-@media (max-width: 600px) {
-  .carousel-track { gap: 14px; }
-  .work-card { min-width: 230px; max-width: 230px; }
-  .trabalhos-verticais .work-card { min-width: 160px; max-width: 160px; }
-}
-
-@media (max-width: 560px) {
-  .logo { height: 34px; }
-  .wordmark { font-size: 36px; }
-  .container { padding: 0 18px; }
-  .hero { min-height: 60vh; }
-  .top-nav { gap: 12px; }
-}
-
-/* ==============================
-   🖥️ Telas Ultra Largas (21:9 ou +2000px)
+  /* ==============================
+   🖥️ ULTRAWIDE — Layout Geral
 ============================== */
 @media (min-aspect-ratio: 21/9), (min-width: 2000px) {
-
-  .video-wrapper.horizontal {
-    max-width: 1300px;
-  }
-
-  .video-info-card {
-    max-width: 1300px;
-    padding: 16px 22px;
-    gap: 6px;
-  }
-
-  .video-info-card .video-title {
-    font-size: 1.4rem;
-  }
-
-  .video-info-card .video-description {
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
   .container {
     max-width: 2000px;
     margin: 0 auto;
     padding: 0 100px;
-    
   }
 
   .trabalhos {
     padding: 100px 0;
   }
+}
+/* ==============================
+   🖥️ ULTRAWIDE — Layout Geral
+============================== */
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
 
   .carousel-track {
     gap: 40px;
@@ -1409,11 +1312,10 @@ body {
   .work-card {
     min-width: 380px;
     max-width: 380px;
-    overflow: hidden;
   }
 
   .video-content {
-    max-width: 1400px;
+    max-width: 1200px;
   }
 
   .servicos-grid {
@@ -1421,115 +1323,63 @@ body {
     gap: 60px;
   }
 
+  .quem-sou-eu-conteudo {
+    max-width: 1600px;
+  }
+
   .titulo-contato {
     font-size: 5rem;
   }
+
 }
-/* ======================
-     Vídeos Verticais
-  ====================== */
-
-  .video-modal.is-vertical .video-wrapper.vertical {
-    max-width: 560px;
-  }
-
-  .video-modal.is-vertical .video-info-card {
-    max-width: 560px;
-    padding: 14px 20px;
-  }
-
-  .video-modal.is-vertical .video-info-card .video-title {
-    font-size: 1.15rem;
-  }
-
-  .video-modal.is-vertical .video-info-card .video-description {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-/* ==============================
-   🖥️ Telas Ultra Largas — Close Button Vídeo Vertical
+  /* ==============================
+   🖥️ ULTRAWIDE — Vídeo Horizontal
 ============================== */
+
+@media (min-aspect-ratio: 21/9), (min-width: 2560px) {
+
+  .video-wrapper.horizontal {
+    max-width: 1100px; /* 🔑 AQUI você regula */
+  }
+}
+
+/* ==============================
+   🖥️ ULTRAWIDE — Vídeo Vertical
+============================== */
+
+@media (min-width: 2400px) {
+
+  .video-wrapper.vertical {
+    max-width: 560px;
+  }
+}
+
+/* ==============================
+   🖥️ ULTRAWIDE — Close Button
+============================== */
+
+@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
+
+  .video-modal:not(.is-vertical) .close-btn {
+    top: -22px;
+    right: 47%;
+    transform: translateX(550px); /* 🔑 ajuste fino */
+  }
+}
 @media (min-aspect-ratio: 21/9), (min-width: 2000px) {
 
   .video-modal.is-vertical .close-btn {
-    top: 20px;
+    top: 14px;
     right: 42%;
-    transform: translateX(240px);
-  }
-
-}
-/* ==============================
-   🖥️ Quem Sou Eu — Telas Ultra Largas
-============================== */
-@media (min-aspect-ratio: 21/9), (min-width: 2000px) {
-
-  .quem-sou-eu {
-    padding: 140px 0; /* mais presença vertical */
-  }
-
-  .quem-sou-eu-conteudo {
-    max-width: 1400px;  /* 🔑 AQUI é o coração do ajuste */
-    gap: 120px;         /* espaço entre imagem e texto */
-  }
-
-  .quem-sou-eu-img img {
-    max-width: 520px;   /* imagem mais forte */
-  }
-
-  .quem-sou-eu h2 {
-    font-size: 3.2rem;
-  }
-
-  .quem-sou-eu p {
-    font-size: 1.25rem;
-    line-height: 1.8;
-  }
-
-  .btn-quem-sou-eu {
-    font-size: 1.1rem;
-    padding: 14px 34px;
+    transform: translateX(260px); /* 🔑 ajuste fino */
   }
 }
-
-/* ==========================
-   🖥️ Contato — telas ultra largas
-========================== */
-@media (min-width: 1400px) {
-
-  .contato-acao {
-    align-items: flex-end;
-    gap: 24px;
-  }
-
-  .titulo-contato {
-    font-size: 2.3rem;
-  }
-
-  .btn-contato {
-    font-size: 1.05rem;
-    padding: 14px 32px;
-  }
-
-  .contato-container {
-    justify-content: center;  /* 🔑 CENTRALIZA O CONJUNTO */
-    gap: 820px;               /* 🔧 controla distância entre info e ação */
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
 
 /* ==============================
-   Carrossel Trabalhos — telas ultra largas
+   🖥️ ULTRAWIDE — Carrossel
 ============================== */
+
 @media (min-width: 2400px) {
-  .carousel {
-    overflow: hidden;
-  }
-  .carousel-track {
-    gap: 32px;
-    padding-right: 40px;
-  }
 
   /* Trabalhos horizontais */
   .trabalhos .carousel-controls .prev {
@@ -1552,12 +1402,28 @@ body {
     left: 44%;
     transform: translateX(50px);
   }
-
 }
+/* ==========================
+   🖥️ Contato — telas ultra largas
+========================== */
+@media (min-width: 1400px) {
+  .titulo-contato {
+    font-size: 2.3rem;     /* cresce, mas com controle */
+  }
 
+  .btn-contato {
+    font-size: 1.05rem;
+    padding: 14px 32px;
+  }
+
+  .contato-container {
+    padding: 32px 100px;   /* mais respiro lateral */
+  }
+}
 /* ==============================
-   Tema Claro para Trabalhos Verticais e Serviços
+   🎨 Tema Claro
 ============================== */
+
 body.light-theme {
   background: #0c0b0b;
   color: #ffffff;
@@ -1590,4 +1456,40 @@ body.light-theme .servico-card p {
 body.light-theme .btn {
   border-color: #ffffff;
   color: #ffffff;
+}
+
+/* ==============================
+   🧼 Scrollbar Custom
+============================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000 transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #fb913b,
+    #fbb03b
+  );
+  border-radius: 999px;
+  border: 2px solid #000 transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ffd18a,
+    #fb913b
+  );
+}
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fb913b transparent;
 }
