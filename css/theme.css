@@ -1,0 +1,37 @@
+/* ==============================
+   🎨 Tema Claro
+============================== */
+
+body.light-theme {
+  background: #0c0b0b;
+  color: #ffffff;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+body.light-theme .site-header {
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.85), rgba(10, 10, 10, 0.55));
+}
+/* quando o site ficar claro, inverse o fundo do card */
+body.light-theme .work-card {
+  background: rgba(0, 0, 0, 0.279); /* sutil em modo claro */
+  border: 1px solid rgba(22, 22, 22, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+body.light-theme .site-header .top-nav a {
+  color: #ffffff;
+}
+
+body.light-theme .section-title,
+body.light-theme .servico-card h3 {
+  color: #ffffff;
+}
+
+body.light-theme .servico-card p {
+  color: #b1b1b1;
+}
+
+body.light-theme .btn {
+  border-color: #ffffff;
+  color: #ffffff;
+}

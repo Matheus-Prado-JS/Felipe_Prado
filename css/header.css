@@ -1,0 +1,68 @@
+/* ==============================
+   🧭 Estrutura Global (Header & Navegação)
+============================== */
+
+.site-header {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 40;
+  
+
+  padding: 22px 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.35),
+    rgba(5, 5, 5, 0.05)
+  );
+  backdrop-filter: blur(6px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ========== Logo Hover ========== */
+.logo {
+  height: 44px;
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+
+/* ========== Links Nav ========== */
+.top-nav a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1.2px;
+  position: relative;
+  transition: color 0.4s ease;
+}
+
+/* Animação de cor suave */
+.top-nav a:hover {
+  color: #fbb03b;
+}
+
+/* Efeito underline minimalista (opcional, elegante) */
+.top-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #fbb03b;
+  transition: width 0.4s ease;
+}
+
+.top-nav a:hover::after {
+  width: 100%;
+}

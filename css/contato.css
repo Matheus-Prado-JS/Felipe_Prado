@@ -1,0 +1,105 @@
+/* ==============================
+   📞 Contato — Layout
+============================== */
+
+.contato {
+  background: #000;
+  padding: 10px 180px 40px;
+}
+
+.contato-container {
+  display: flex;
+  align-items: center;              
+  justify-content: space-between;   
+  gap: 60px;                        
+
+  max-width: 2000px;
+  margin: 0 auto;
+  background: #000;
+  padding: 24px 60px;
+  border-radius: 12px;
+}
+
+.titulo-contato {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fb913b;
+  margin: 0;
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+
+.titulo-contato:hover {
+  color: #ffd18a; /* laranja mais claro */
+  transform: translateY(-2px);
+}
+
+
+.btn-contato {
+  padding: 12px 26px;
+  border: 2px solid #fb913b;
+  color: #fb913b;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  background: transparent;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn-contato:hover {
+  background: #fb913b;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(251, 145, 59, 0.35);
+}
+
+/* ==============================
+   ✨ Contato — Interações & Hovers
+============================== */
+
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 32px;
+  font-size: 0.95rem;
+  padding-left: 50px;
+}
+
+.contato-info span {
+  display: inline-block;
+  align-items: center;
+  gap: 10px;
+
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease,
+    letter-spacing 0.3s ease;
+}
+
+/* animação laranja da esquerda para direita */
+.contato-info span:hover {
+  color: #fb913b;
+  transform: translateX(6px);
+  letter-spacing: 0.4px;
+}
+
+.contato-info span::before {
+  content: "›";
+  color: #fb913b;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.contato-info span:hover::before {
+  opacity: 1;
+  transform: translateX(0);
+}

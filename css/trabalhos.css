@@ -1,0 +1,169 @@
+/* ==============================
+   🧩 Trabalhos — Base
+============================== */
+
+.trabalhos {
+  padding: 60px 0;
+  background: inherit;
+  color: inherit;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+.carousel {
+  position: relative;
+  overflow: visible;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  gap: 24px;
+  padding-bottom: 6px;
+}
+
+/* card */
+.work-card {
+  min-width: 320px;
+  max-width: 320px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 14px;
+  overflow: visible; /* 🔑 IMPORTANTE */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: box-shadow 0.5s ease;
+  transform-origin: center;
+  will-change: transform;
+}
+.trabalhos,
+.trabalhos-verticais {
+  overflow-x: hidden;
+}
+
+/* thumb */
+.work-card .thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: block;
+  background: #0b0b0b;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.work-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* meta */
+.work-card h3 {
+  margin: 16px;
+  font-size: 20px;
+  color: inherit;
+  transition: color 0.4s ease;
+}
+
+.work-card p {
+  margin: 0 16px 20px;
+  font-size: 14px;
+  flex: 1 0 auto;
+  color: inherit;
+  transition: color 0.4s ease;
+}
+
+.carousel-controls {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  position: relative;
+}
+
+.carousel-controls button {
+  position: absolute;
+  background: var(--accent);
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  color: rgb(19, 19, 19);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.carousel-controls button:hover {
+  background: rgb(19, 19, 19);
+  color: #fbb03b;
+}
+.carousel-track {
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+.trabalhos .carousel-controls .prev {
+  left: 58%;
+  transform: translateX(-50px); /* controla distância */
+}
+
+.trabalhos .carousel-controls .next {
+  left: 58%;
+  transform: translateX(35px); /* controla distância */
+}
+
+.trabalhos-verticais .carousel-controls .prev {
+  left: 50%;
+  transform: translateX(-36px);
+}
+
+.trabalhos-verticais .carousel-controls .next {
+  left: 50%;
+  transform: translateX(148px);
+}
+
+.trabalhos-verticais .work-card .thumb {
+  aspect-ratio: 9 / 16;
+  background: inherit;
+}
+
+.trabalhos-verticais .work-card {
+  min-width: 240px;
+  max-width: 240px;
+}
+
+/* ==============================
+   ✨ Hovers & Micro-interações
+============================== */
+
+.hover-img {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.work-card:hover .hover-img,
+.quem-sou-eu-img:hover .hover-img {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
+}
+.work-card {
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  will-change: transform;
+}
+
+.work-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(251, 145, 59, 0.4);
+}
+
+.trabalhos-verticais .work-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px rgba(251, 145, 59, 0.4);
+}

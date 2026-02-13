@@ -1,0 +1,39 @@
+/* ==============================
+   🌱 Base Global, Reset & Variáveis
+============================== */
+
+:root {
+  --accent: #fbb03b;
+  --bg: #050505;
+  --max-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
+  color: #eaeaea;
+  background: var(--bg);
+  will-change: background, color;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.section-title {
+  font-size: 36px;
+  margin-bottom: 40px;
+  text-align: left;
+  font-family: Oswald, sans-serif;
+}
