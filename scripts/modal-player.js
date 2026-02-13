@@ -47,20 +47,6 @@ function formatTime(sec) {
   return `${m}:${s}`;
 }
 
-// Atualiza ícone play/pause
-function syncPlayPauseIcon(event) {
-  const customPlayer = document.querySelector(".custom-player");
-  if (!customPlayer) return;
-
-  if (event.data === YT.PlayerState.PLAYING) {
-    customPlayer.classList.add("playing");
-  }
-
-  if (event.data === YT.PlayerState.PAUSED) {
-    customPlayer.classList.remove("playing");
-  }
-}
-
 /* ===============================
    INIT PRINCIPAL DO MODAL PLAYER
 ================================ */
@@ -77,16 +63,17 @@ function initVideoModal() {
 
   let currentIndex = 0;
   let workCards = [];
-  let sectionType = "";
   let player = null;
 
   let controlsTimeout = null;
+  let progressInterval = null;
 
   // ativa swipe do modal
   initModalSwipe(modal);
 
   /* ===============================
-     Fullscreen – controle visibilidade controles
+     Mostrar controles no fullscreen
+     (Agora respeita pause)
   =============================== */
   function showControls() {
     const playerEl = modal.querySelector(".custom-player");
@@ -98,6 +85,16 @@ function initVideoModal() {
 
     clearTimeout(controlsTimeout);
 
+    // Se estiver pausado, NÃO some com os controles
+    if (player && player.getPlayerState) {
+      const state = player.getPlayerState();
+
+      if (state === YT.PlayerState.PAUSED) {
+        return; // mantém sempre visível
+      }
+    }
+
+    // Se estiver tocando, some depois de 2.5s
     controlsTimeout = setTimeout(() => {
       playerEl.classList.remove("show-controls");
       playerEl.classList.add("hide-controls");
@@ -118,38 +115,74 @@ function initVideoModal() {
   }
 
   /* ===============================
-     Liga os controles customizados
+     Atualiza ícone play/pause
   =============================== */
-  function setupCustomControls() {
-    const playPauseBtn = modal.querySelector(".play-pause");
-    const progressBar = modal.querySelector(".progress-bar");
-    const progress = modal.querySelector(".progress");
-    const timeLabel = modal.querySelector(".time");
-    const volumeControl = modal.querySelector(".volume");
-    const fullscreenBtn = modal.querySelector(".fullscreen-btn");
+  function syncPlayPauseIcon(state) {
+    const customPlayer = modal.querySelector(".custom-player");
+    if (!customPlayer) return;
 
-    if (!playPauseBtn || !progressBar || !progress || !timeLabel || !volumeControl) {
-      return;
+    if (state === YT.PlayerState.PLAYING) {
+      customPlayer.classList.add("playing");
+
+      // se começar a tocar, deixa sumir de novo
+      showControls();
     }
 
-    playPauseBtn.addEventListener("click", () => {
-      if (!player) return;
+    if (state === YT.PlayerState.PAUSED) {
+      customPlayer.classList.remove("playing");
 
-      if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-      } else {
-        player.playVideo();
-      }
-    });
+      // se pausou, controles devem ficar sempre visíveis
+      clearTimeout(controlsTimeout);
 
-    volumeControl.addEventListener("input", (e) => {
-      if (!player) return;
-      player.setVolume(e.target.value);
-    });
+      customPlayer.classList.add("show-controls");
+      customPlayer.classList.remove("hide-controls");
+    }
+  }
 
-    // Atualiza progresso e tempo
-    setInterval(() => {
+  /* ===============================
+     Toggle play/pause
+  =============================== */
+  function togglePlay() {
+    if (!player) return;
+
+    const state = player.getPlayerState();
+
+    if (state === YT.PlayerState.PLAYING) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  }
+
+  /* ===============================
+     Fullscreen toggle
+  =============================== */
+  function toggleFullscreen() {
+    const playerContainer = modal.querySelector(".custom-player");
+    if (!playerContainer) return;
+
+    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+      playerContainer.requestFullscreen?.();
+      playerContainer.webkitRequestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+      document.webkitExitFullscreen?.();
+    }
+  }
+
+  /* ===============================
+     Atualiza barra de progresso
+  =============================== */
+  function startProgressLoop() {
+    stopProgressLoop();
+
+    progressInterval = setInterval(() => {
       if (!player || !player.getDuration) return;
+
+      const progress = modal.querySelector(".progress");
+      const timeLabel = modal.querySelector(".time");
+
+      if (!progress || !timeLabel) return;
 
       const current = player.getCurrentTime();
       const total = player.getDuration();
@@ -160,57 +193,97 @@ function initVideoModal() {
         timeLabel.textContent = formatTime(current);
       }
     }, 500);
+  }
 
-    // Clicar na barra para mudar o tempo
-    progressBar.addEventListener("click", (e) => {
+  function stopProgressLoop() {
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
+    }
+  }
+
+  /* ===============================
+     Detecta fullscreen (1 vez só)
+  =============================== */
+  document.addEventListener("fullscreenchange", () => {
+    const playerEl = modal.querySelector(".custom-player");
+    if (!playerEl) return;
+
+    if (document.fullscreenElement) {
+      playerEl.classList.add("is-fullscreen");
+      showControls();
+    } else {
+      playerEl.classList.remove("is-fullscreen", "hide-controls", "show-controls");
+      clearTimeout(controlsTimeout);
+    }
+  });
+
+  /* ===============================
+     Delegação de eventos (IMPORTANTE)
+     Um listener só para todos botões.
+  =============================== */
+  modal.addEventListener("click", (e) => {
+    // Fechar clicando fora
+    if (e.target.id === "videoModal") {
+      modal.style.display = "none";
+      if (player) player.stopVideo();
+      stopProgressLoop();
+      return;
+    }
+
+    // Play/Pause botão
+    if (e.target.closest(".play-pause")) {
+      e.stopPropagation();
+      togglePlay();
+      return;
+    }
+
+    // Fullscreen botão
+    if (e.target.closest(".fullscreen-btn")) {
+      e.stopPropagation();
+      toggleFullscreen();
+      return;
+    }
+
+    // Barra de progresso
+    if (e.target.closest(".progress-bar")) {
       if (!player) return;
 
+      const progressBar = e.target.closest(".progress-bar");
       const rect = progressBar.getBoundingClientRect();
       const percent = (e.clientX - rect.left) / rect.width;
       const newTime = percent * player.getDuration();
 
       player.seekTo(newTime, true);
-    });
-
-    // Fullscreen
-    if (fullscreenBtn) {
-      fullscreenBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-
-        const playerContainer = modal.querySelector(".custom-player");
-        if (!playerContainer) return;
-
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-          playerContainer.requestFullscreen?.();
-          playerContainer.webkitRequestFullscreen?.();
-        } else {
-          document.exitFullscreen?.();
-          document.webkitExitFullscreen?.();
-        }
-      });
+      return;
     }
 
-    // Detecta fullscreen
-    document.addEventListener("fullscreenchange", () => {
-      const playerEl = modal.querySelector(".custom-player");
-      if (!playerEl) return;
-
-      if (document.fullscreenElement) {
-        playerEl.classList.add("is-fullscreen");
-        showControls();
-      } else {
-        playerEl.classList.remove("is-fullscreen", "hide-controls", "show-controls");
-        clearTimeout(controlsTimeout);
-      }
-    });
-
-    // movimento mostra controles
-    const interactionLayer = modal.querySelector(".interaction-layer");
-    if (interactionLayer) {
-      interactionLayer.addEventListener("mousemove", showControls);
-      interactionLayer.addEventListener("touchstart", showControls);
+    // Clique no vídeo (fora controles) = toggle play
+    if (e.target.closest(".custom-player")) {
+      if (e.target.closest(".controls")) return;
+      togglePlay();
+      return;
     }
-  }
+  });
+
+  /* ===============================
+     Controle de volume (input range)
+     Também via delegação
+  =============================== */
+  modal.addEventListener("input", (e) => {
+    if (!player) return;
+
+    if (e.target.matches(".volume")) {
+      player.setVolume(e.target.value);
+    }
+  });
+
+  /* ===============================
+     Mostrar controles quando mexer
+  =============================== */
+document.addEventListener("mousemove", showControls);
+document.addEventListener("touchstart", showControls);
+
 
   /* ===============================
      Carrega vídeo no modal
@@ -241,10 +314,19 @@ function initVideoModal() {
     const customPlayer = wrapper.querySelector(".custom-player");
     if (!customPlayer) return;
 
+    // Se já existir player, destrói antes
+    if (player && player.destroy) {
+      player.destroy();
+      player = null;
+    }
+
+    stopProgressLoop();
+
     customPlayer.innerHTML = `
       <div id="videoFrame"></div>
+
       <div class="controls">
-        <button class="play-pause">
+        <button class="play-pause" type="button">
           <svg viewBox="0 0 24 24" class="icon play"><path d="M8 5v14l11-7z"/></svg>
           <svg viewBox="0 0 24 24" class="icon pause"><path d="M6 19h4V5H6zm8-14v14h4V5h-4z"/></svg>
         </button>
@@ -257,7 +339,7 @@ function initVideoModal() {
 
         <input type="range" class="volume" min="0" max="100" value="100" />
 
-        <button class="fullscreen-btn" aria-label="Tela cheia">
+        <button class="fullscreen-btn" type="button" aria-label="Tela cheia">
           <svg viewBox="0 0 24 24" class="icon fullscreen" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
             <path d="M16 3h3a2 2 0 0 1 2 2v3"/>
@@ -267,37 +349,6 @@ function initVideoModal() {
         </button>
       </div>
     `;
-
-    customPlayer.classList.add("playing");
-
-    // Impede clique nos controles de pausar o vídeo
-    customPlayer.querySelectorAll(".controls *").forEach((el) => {
-      el.addEventListener("click", (e) => e.stopPropagation());
-    });
-
-    // Clique no vídeo = play/pause
-    function togglePlay() {
-      if (!player) return;
-
-      const state = player.getPlayerState();
-
-      if (state === YT.PlayerState.PLAYING) {
-        player.pauseVideo();
-      } else {
-        player.playVideo();
-      }
-    }
-
-    customPlayer.addEventListener("click", (e) => {
-      if (e.target.closest(".controls")) return;
-      togglePlay();
-    });
-
-    customPlayer.addEventListener("pointerdown", (e) => {
-      if (e.target.closest(".controls")) return;
-      togglePlay();
-    });
-
 
     // Cria o player YouTube via API
     player = new YT.Player("videoFrame", {
@@ -310,9 +361,11 @@ function initVideoModal() {
         showinfo: 0,
       },
       events: {
-        onReady: setupCustomControls,
+        onReady: () => {
+          startProgressLoop();
+        },
         onStateChange: (event) => {
-          syncPlayPauseIcon(event);
+          syncPlayPauseIcon(event.data);
 
           // se acabar, reinicia
           if (event.data === YT.PlayerState.ENDED) {
@@ -334,10 +387,6 @@ function initVideoModal() {
       const parentSection = card.closest(".trabalhos");
       if (!parentSection) return;
 
-      sectionType = parentSection.classList.contains("trabalhos-verticais")
-        ? "vertical"
-        : "horizontal";
-
       workCards = Array.from(parentSection.querySelectorAll(".work-card"));
       currentIndex = workCards.indexOf(card);
 
@@ -352,13 +401,7 @@ function initVideoModal() {
   closeBtn?.addEventListener("click", () => {
     modal.style.display = "none";
     if (player) player.stopVideo();
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target.id === "videoModal") {
-      modal.style.display = "none";
-      if (player) player.stopVideo();
-    }
+    stopProgressLoop();
   });
 
   /* ===============================
@@ -366,7 +409,6 @@ function initVideoModal() {
   =============================== */
   prevBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
-
     if (workCards.length === 0) return;
 
     currentIndex = (currentIndex - 1 + workCards.length) % workCards.length;
@@ -375,7 +417,6 @@ function initVideoModal() {
 
   nextBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
-
     if (workCards.length === 0) return;
 
     currentIndex = (currentIndex + 1) % workCards.length;
